@@ -9,7 +9,7 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth as TymonJWTAuth;
 
-class ApiController extends Controller
+class ApiController2 extends Controller
 {
     public $loginAfterSignUp = true;
 

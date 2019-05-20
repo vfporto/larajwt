@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Carbon;
+use Carbon\CarbonTimeZone;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,7 +18,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function () {return "TESTE";});
+Route::get('/', function () {
+    return response()->json([
+        'message' => 'PontuALL API - ONLINE',
+        'time' => Carbon::now()->subHours(3)->timestamp,
+        ]);
+});
+
+Route::get('/time', function () {
+    return response()->json(Carbon::now()->subHours(3)->timestamp);
+});
+
+
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
 
@@ -31,4 +43,13 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('products', 'ProductController@store');
     Route::put('products/{id}', 'ProductController@update');
     Route::delete('products/{id}', 'ProductController@destroy');
+    Route::resource('usuarios', 'UsuariosController');
 });
+
+
+
+
+
+
+Route::resource('usuarioz', 'UsuariosController');
+Route::resource('tipo_usuarioz', 'TipoUsuariosController');

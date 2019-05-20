@@ -11,7 +11,7 @@ use App\Area;
 use App\Usuario;
 use Illuminate\Support\Facades\Hash;
 
-class ApiController extends Controller
+class ApiControllerOld extends Controller
 {
     public $loginAfterSignUp = true;
 
