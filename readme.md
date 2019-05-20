@@ -70,3 +70,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 "# larajwt" 
+
+## Installation
+Go to the folder application using cd command on your cmd or terminal
+
+- composer install
+- php artisan key:generate
+- php artisan migrate
+- php artisan db:seed
+- php artisan serve
+
