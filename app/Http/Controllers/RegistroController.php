@@ -4,82 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Registro;
 use Illuminate\Http\Request;
+use App\Usuario;
 
 class RegistroController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $lista = Registro::all();
+
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id){
+        $retorno = Registro::find($id);
+
+        if(!$retorno) {return response()->json(['erro' => 'Registro não encontrado'], 404);}
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $registro = new Registro();
+        $registro->fill($request->all());
+        $registro->save();
+
+        return response()->json($registro);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Registro  $registro
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Registro $registro)
-    {
-        //
+    public function update(Request $request, $id){
+        $retorno = Feriado::find($id);
+
+        if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+
+        $retorno->fill($request->all());
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Registro  $registro
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Registro $registro)
-    {
-        //
+    public function destroy($id){
+        $registro = Registro::find($id);
+        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $registro->delete();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Registro  $registro
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Registro $registro)
-    {
-        //
-    }
+    public function registrarPonto(Request $request){
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Registro  $registro
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Registro $registro)
-    {
-        //
+        $cartao = $request->cartao;
+        $dataHora = $request->dataHora;
+
+        $usuario = Usuario::where('cartao','=',$cartao);
+
     }
 }

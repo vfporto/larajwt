@@ -13,7 +13,7 @@ class ApiController2 extends Controller
 {
     public $loginAfterSignUp = true;
 
-    public function register(RegisterAuthRequest $request)
+    public function register(/*RegisterAuthRequest*/ Request $request)
     {
         $user = new User();
         $user->name = $request->name;

@@ -38,12 +38,20 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     Route::get('user', 'ApiController@getAuthUser');
 
-    Route::get('products', 'ProductController@index');
+    /*Route::get('products', 'ProductController@index');
     Route::get('products/{id}', 'ProductController@show');
     Route::post('products', 'ProductController@store');
     Route::put('products/{id}', 'ProductController@update');
-    Route::delete('products/{id}', 'ProductController@destroy');
+    Route::delete('products/{id}', 'ProductController@destroy');*/
+
     Route::resource('usuarios', 'UsuariosController');
+    Route::resource('areas', 'AreaController');
+    Route::resource('feriados', 'FeriadoController');
+    Route::resource('jornadas', 'JornadaController');
+    Route::resource('tiposOcorrencia', 'TipoOcorrenciaController');
+    Route::resource('tiposJustificativa', 'TipoJustificativaController');
+    Route::resource('tipoUsuario', 'TipoUsuarioController');
+
 });
 
 
