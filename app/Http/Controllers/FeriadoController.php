@@ -7,83 +7,39 @@ use Illuminate\Http\Request;
 
 class FeriadoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //            $table->bigIncrements('id');
-        //            $table->date('data');
-        //            $table->string('nome',40);
-        //            $table->timestamps();
+    public function index(){
+        $lista = Feriado::all();
 
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id){
+        $retorno = Feriado::find($id);
+
+        if(!$retorno) {return response()->json(['erro' => 'Registro não encontrado'], 404);}
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $feriado = new Feriado();
+        $feriado->fill($request->all());
+        $feriado->save();
+
+        return response()->json($feriado);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Feriado  $feriado
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Feriado $feriado)
-    {
-        //
+    public function update(Request $request, $id){
+        $retorno = Feriado::find($id);
+
+        if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+
+        $retorno->fill($request->all());
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Feriado  $feriado
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Feriado $feriado)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Feriado  $feriado
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Feriado $feriado)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Feriado  $feriado
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Feriado $feriado)
-    {
-        //
+    public function destroy($id){
+        $feriado = Feriado::find($id);
+        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $feriado->delete();
     }
 }

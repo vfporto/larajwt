@@ -7,79 +7,39 @@ use Illuminate\Http\Request;
 
 class TipoJustificativaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $lista = TipoJustificativa::all();
+
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id){
+        $retorno = TipoJustificativa::find($id);
+
+        if(!$retorno) {return response()->json(['erro' => 'Registro não encontrado'], 404);}
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $tipoJustificativa = new TipoJustificativa();
+        $tipoJustificativa->fill($request->all());
+        $tipoJustificativa->save();
+
+        return response()->json($tipoJustificativa);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\TipoJustificativa  $tipoJustificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TipoJustificativa $tipoJustificativa)
-    {
-        //
+    public function update(Request $request, $id){
+        $retorno = Feriado::find($id);
+
+        if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+
+        $retorno->fill($request->all());
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TipoJustificativa  $tipoJustificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoJustificativa $tipoJustificativa)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TipoJustificativa  $tipoJustificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TipoJustificativa $tipoJustificativa)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\TipoJustificativa  $tipoJustificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TipoJustificativa $tipoJustificativa)
-    {
-        //
+    public function destroy($id){
+        $tipoJustificativa = TipoJustificativa::find($id);
+        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $tipoJustificativa->delete();
     }
 }

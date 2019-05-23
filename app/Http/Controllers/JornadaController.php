@@ -7,79 +7,39 @@ use Illuminate\Http\Request;
 
 class JornadaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $lista = Jornada::all();
+
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id){
+        $retorno = Jornada::find($id);
+
+        if(!$retorno) {return response()->json(['erro' => 'Registro não encontrado'], 404);}
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $jornada = new Jornada();
+        $jornada->fill($request->all());
+        $jornada->save();
+
+        return response()->json($jornada);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Jornada  $jornada
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Jornada $jornada)
-    {
-        //
+    public function update(Request $request, $id){
+        $retorno = Feriado::find($id);
+
+        if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+
+        $retorno->fill($request->all());
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Jornada  $jornada
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Jornada $jornada)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Jornada  $jornada
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Jornada $jornada)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Jornada  $jornada
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Jornada $jornada)
-    {
-        //
+    public function destroy($id){
+        $jornada = Jornada::find($id);
+        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $jornada->delete();
     }
 }

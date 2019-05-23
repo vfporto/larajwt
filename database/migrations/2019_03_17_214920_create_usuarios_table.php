@@ -18,9 +18,10 @@ class CreateUsuariosTable extends Migration
             $table->string('login', 20)->unique();
             $table->string('password');
             //Campos de Funcionario
-            //$table->integer('matricula',false,true);
             //$table->string('nome', 100);
             //$table->string('email', 50);
+            //$table->integer('matricula',false,true);
+            //$table->string('cartao',20);
             //--------
             $table->unsignedBigInteger('tipo_usuario_id');
             $table->foreign('tipo_usuario_id')->references('id')->on('tipo_usuarios')->onDelete('cascade');

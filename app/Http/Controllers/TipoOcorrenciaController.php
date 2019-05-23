@@ -7,79 +7,39 @@ use Illuminate\Http\Request;
 
 class TipoOcorrenciaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $lista = TipoOcorrencia::all();
+
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id){
+        $retorno = TipoOcorrencia::find($id);
+
+        if(!$retorno) {return response()->json(['erro' => 'Registro não encontrado'], 404);}
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $tipoOcorrencia = new TipoOcorrencia();
+        $tipoOcorrencia->fill($request->all());
+        $tipoOcorrencia->save();
+
+        return response()->json($tipoOcorrencia);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\TipoOcorrencia  $tipoOcorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TipoOcorrencia $tipoOcorrencia)
-    {
-        //
+    public function update(Request $request, $id){
+        $retorno = Feriado::find($id);
+
+        if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+
+        $retorno->fill($request->all());
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TipoOcorrencia  $tipoOcorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoOcorrencia $tipoOcorrencia)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TipoOcorrencia  $tipoOcorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TipoOcorrencia $tipoOcorrencia)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\TipoOcorrencia  $tipoOcorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TipoOcorrencia $tipoOcorrencia)
-    {
-        //
+    public function destroy($id){
+        $tipoOcorrencia = TipoOcorrencia::find($id);
+        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $tipoOcorrencia->delete();
     }
 }
