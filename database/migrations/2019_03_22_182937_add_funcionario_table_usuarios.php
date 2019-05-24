@@ -15,10 +15,10 @@ class AddFuncionarioTableUsuarios extends Migration
     {
         Schema::table('usuarios', function (Blueprint $table) {
             //
-            $table->string('nome', 100)->after('matricula');
+            $table->string('nome', 100)->after('tipo_usuario_id');
             $table->string('email', 50)->after('nome');
             $table->string('cartao',20)->after('email');
-            $table->integer('matricula',false,true)->after('tipo_usuario_id');
+            $table->integer('matricula',false,true)->after('email');
 
             //$table->unsignedBigInteger('area_id')->after('email'); //alterado esquema. agora com tabela associativa..
         });

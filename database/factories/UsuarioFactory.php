@@ -12,6 +12,7 @@ $factory->define(App\Usuario::class, function (FFaker $faker) {
         'matricula' => $faker->unique()->numberBetween(10000, 10999),
         'nome' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'cartao' => $faker->unique()->numberBetween(10000, 10999),
         //'remember_token' => Str::random(10),
 
         //'area_id' => 1, //alterado o modelo...

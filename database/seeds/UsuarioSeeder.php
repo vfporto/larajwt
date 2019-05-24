@@ -23,6 +23,7 @@ class UsuarioSeeder extends Seeder
             'matricula' => 10000,
             'nome' => 'Fabricio',
             'email' => 'vfporto@vfporto',
+            'cartao' => '10000',
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 1,
         ]);
@@ -34,6 +35,7 @@ class UsuarioSeeder extends Seeder
             'matricula' => 10001,
             'nome' => 'funcionario',
             'email' => 'funcionario',
+            'cartao' => '10001',
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 1,
         ]);
@@ -45,6 +47,7 @@ class UsuarioSeeder extends Seeder
             'matricula' => 10002,
             'nome' => 'gerente',
             'email' => 'gerente',
+            'cartao' => '10002',
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 2,
         ]);
@@ -56,6 +59,7 @@ class UsuarioSeeder extends Seeder
             'matricula' => 10003,
             'nome' => 'gestor',
             'email' => 'gestor',
+            'cartao' => '10003',
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 3,
         ]);
