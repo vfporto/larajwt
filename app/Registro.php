@@ -17,11 +17,16 @@ class Registro extends Model
 
     use SoftDeletes;
 
-    protected $fillable = ['horario', 'registro_diario_id'];
+    protected $fillable = ['horario'/*, 'registro_diario_id'*/];
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'usuario_id'];
-    protected $dates = ['horario', 'created_at', 'updated_at','deleted_at'];
+    protected $dates = [/*'horario', */'created_at', 'updated_at','deleted_at'];
 
+    /* //--alteração nas associações
     function usuario() {
         return $this->belongsTo('App\Usuario');
+    }*/
+
+    function registroDiario(){
+        return $this->belongsTo('App\RegistroDiario');
     }
 }

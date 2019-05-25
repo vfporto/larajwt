@@ -7,79 +7,48 @@ use Illuminate\Http\Request;
 
 class RegistroDiarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $lista = RegistroDiario::all();
+
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id){
+        $retorno = RegistroDiario::find($id);
+
+        if(!$retorno) {return response()->json(['erro' => 'Registro não encontrado'], 404);}
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $registroDiario = new RegistroDiario();
+        $registroDiario->fill($request->all());
+        $registroDiario->save();
+
+        return response()->json($registroDiario);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\RegistroDiario  $registroDiario
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RegistroDiario $registroDiario)
-    {
-        //
+    public function update(Request $request, $id){
+        $retorno = RegistroDiario::find($id);
+
+        if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+
+        $retorno->fill($request->all());
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RegistroDiario  $registroDiario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RegistroDiario $registroDiario)
-    {
-        //
+    public function destroy($id){
+        $registroDiario = RegistroDiario::find($id);
+        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $registroDiario->delete();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RegistroDiario  $registroDiario
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, RegistroDiario $registroDiario)
-    {
-        //
-    }
+    public function registrarPonto(Request $request){
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\RegistroDiario  $registroDiario
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RegistroDiario $registroDiario)
-    {
-        //
+        $cartao = $request->cartao;
+        $dataHora = $request->dataHora;
+
+        $usuario = Usuario::where('cartao','=',$cartao);
+
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Registro;
 use Illuminate\Http\Request;
+use App\Registro;
+use App\RegistroDiario;
 use App\Usuario;
+use Carbon\Carbon;
 
 class RegistroController extends Controller
 {
@@ -30,7 +32,7 @@ class RegistroController extends Controller
     }
 
     public function update(Request $request, $id){
-        $retorno = Feriado::find($id);
+        $retorno = Registro::find($id);
 
         if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
 
@@ -44,12 +46,40 @@ class RegistroController extends Controller
         $registro->delete();
     }
 
-    public function registrarPonto(Request $request){
+    public function registrarPonto($cartao, $unixTime){
 
-        $cartao = $request->cartao;
-        $dataHora = $request->dataHora;
+        $dataHora = Carbon::createFromTimestamp($unixTime);
 
         $usuario = Usuario::where('cartao','=',$cartao);
+        $data = $dataHora->toDateString();
+        $hora = $dataHora->toTimeString();
+
+        /*//$rd = $registroDiario
+        $registroDiario = RegistroDiario::were([
+            ['dia','=',$data],
+            ['usuario_id','=',$usuario->id]
+        ])->first();*/
+
+        $registroDiario = RegistroDiario::where('dia','=', $data)
+            ->where('usuario_id','=',$usuario->id);
+            //->first();
+            dd($registroDiario);
+
+        if(!$registroDiario){
+            $registroDiario = new RegistroDiario;
+            $registroDiario->dia = $data;
+            $registroDiario->usuario = $usuario;
+            $registro->save();
+        }
+
+        //Teste Retorno...
+        return response()->json([
+            'usuario' => $usuario,
+            'data' => $data,
+            'hora' => $hora
+        ]);
+
+
 
     }
 }
