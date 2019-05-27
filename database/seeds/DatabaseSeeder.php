@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             JornadaSeeder::class,
             RegistroDiarioSeeder::class,
             RegistroSeeder::class,
+            TipoOcorrenciaSeeder::class,
+            TipoJustificativaSeeder::class,
         ]);
         /*$this->call(AreaSeeder::class);
         $this->call(UsuarioSeeder::class);

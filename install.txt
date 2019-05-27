@@ -1,0 +1,15 @@
+Instalação:
+- Pra instalar o projeto, seguir o procedimento abaixo:
+-- Clonar o projeto do GitHub
+-- Criar banco no MySQL (preferencialmente com a collation "utf8mb4_unicode_ci")
+-- copiar o aquivo .env.example para .env
+-- Editar o arqivo .env para acertar a configuração (nome do banco, user, senha, etc)
+-- Rodar os comandos abaixo (na pasta do projeto):
+     composer install
+     php artisan key:generate
+     php artisan migrate --seed
+     php artisan serve
+
+
+
+

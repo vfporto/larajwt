@@ -3,83 +3,100 @@
 namespace App\Http\Controllers;
 
 use App\Ocorrencia;
+use App\Feriado;
+use App\RegistroDiario;
+use App\Registro;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OcorrenciaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        $lista = Ocorrencia::all();
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id) {
+        $retorno = Ocorrencia::find($id);
+        if (!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $ocorrencia = new Ocorrencia();
+        $ocorrencia->fill($request->all());
+        $ocorrencia->save();
+        return response()->json($ocorrencia);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Ocorrencia  $ocorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ocorrencia $ocorrencia)
-    {
-        //
+    public function update(Request $request, $id) {
+        $retorno = Ocorrencia::find($id);
+        if (!$retorno) {  return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $retorno->fill($request->all());
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ocorrencia  $ocorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ocorrencia $ocorrencia)
-    {
-        //
+    public function destroy($id) {
+        $ocorrencia = Ocorrencia::find($id);
+        if (!$ocorrencia) {
+            return response()->json(['erro' => 'Registro não encontrado'], 404);
+        }
+        $ocorrencia->delete();
+        return response()->json(['msg' => 'Excluido com sucesso!'], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ocorrencia  $ocorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Ocorrencia $ocorrencia)
-    {
-        //
+
+
+/******************************************************************************
+ *              G E R A Ç Ã O    D E   O C O R R Ê N C I A S
+ ******************************************************************************/
+
+    public function gerarOcorrenciasPorIdUsuarioHoje($userId){
+        $dt = Carbon::now()->toDateString();
+        $this->gerarOcorrenciasPorDataPorUsuario($userId, $dt);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Ocorrencia  $ocorrencia
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Ocorrencia $ocorrencia)
-    {
-        //
+    public function gerarOcorrenciasPorDataPorUsuario($userId, $data) {
+
+        $dt = Carbon::createFromDate($data);
+        if($dt->isWeekday()){                   //Se for dia de semana
+            if(!Feriado::where('dia',$data)){   //E não for feriado
+
+                //Recupera o registro diario do empregado
+                //$registroDiario = new RegistroDiarioController()->getByUserIdByDate($userId, $date); //nao funcionou... verificar pq
+                $registroDiario = RegistroDiario::where('dia', $data)
+                    ->where('usuario_id', $userId)
+                    ->with('registros')
+                    ->first();
+
+                //Se não houver registro diario, criar um...
+                if(!$registroDiario){
+                    $registroDiario = new RegistroDiario(); //criar construtor com parametros... assim é um *** fazer...
+                    $registroDiario->fill([
+                        'dia' => $data,
+                        'usuario_id' => $userId
+                    ])->save();
+                }
+
+                //Gerar ocorrencias para este registro diario
+                return gerarOcorrenciasByRegistroDiario($registroDiario);
+            }
+        }
     }
+
+    public function gerarOcorrenciasByRegistroDiario($registroDiario){
+        dd($registroDiario);
+    }
+
+
+    public function gerarOcorrenciasByRegistroDiarioId($registroDiarioId){
+        //por enquanto não é necessário
+    }
+
+
+    public function verificaFaltaIntegral($registroDiarioId) {
+
+    }
+
+
 }

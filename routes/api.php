@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -63,6 +64,8 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     });
 
     Route::get('frequenciaMensal', 'RegistroDiarioController@frequenciaMensal');
+    //teste ocorrencia...
+    //Route::get('gerarOcorrencia/{id}','OcorrenciaController@gerarOcorrenciasPorIdUsuarioHoje');
     //frequenciaByIdPeriodo
     //frequenciaByIdAnoMes
 
@@ -72,14 +75,21 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
 });
 //----------------------- FIM ROTAS PROTEGIDAS -----------------------------------
+Route::get('gerarOcorrencia/{id}','OcorrenciaController@gerarOcorrenciasPorIdUsuarioHoje');
 
 Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@frequenciaByIdAnoMes');
 
 
 
 
-Route::resource('usuarioz', 'UsuariosController');
-Route::resource('tipo_usuarioz', 'TipoUsuariosController');
+ //HACKZ
+ Route::resource('usuarioz', 'UsuariosController');
+ Route::resource('areaz', 'AreaController');
+ Route::resource('feriadoz', 'FeriadoController');
+ Route::resource('jornadaz', 'JornadaController');
+ Route::resource('tiposOcorrenciaz', 'TipoOcorrenciaController');
+ Route::resource('tiposJustificativaz', 'TipoJustificativaController');
+ Route::resource('tipoUsuarioz', 'TipoUsuarioController');
 
 
 

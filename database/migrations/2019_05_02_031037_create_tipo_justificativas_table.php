@@ -15,8 +15,8 @@ class CreateTipoJustificativasTable extends Migration
     {
         Schema::create('tipo_justificativas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo', 3);
-            $table->string('nome',20);
+            $table->string('codigo', 3)->unique();
+            $table->string('nome',50);
             $table->timestamps();
         });
     }
