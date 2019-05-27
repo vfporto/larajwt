@@ -21,9 +21,10 @@ class UsuarioResource extends JsonResource
             'login' => $this->login,
             //'senha' => $this->senha,
             'matricula' => $this->matricula,
+            'cartao' => $this->cartao,
             'nome' => $this->nome,
             'email' => $this->email,
-            'area' => Area::find($this->area_id),
+            /*'area' => Area::find($this->area_id),*/
             'tipoUsuario' => TipoUsuario::find($this->tipoUsuario),
 
             //'cidades' => Cidade::where('estado_id', $this->id)->get(),

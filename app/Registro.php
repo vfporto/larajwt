@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Registro extends Model
 {
@@ -15,7 +16,7 @@ class Registro extends Model
     // ->on('usuarios')
     // ->onDelete('cascade');
 
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $fillable = ['horario'/*, 'registro_diario_id'*/];
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'usuario_id'];

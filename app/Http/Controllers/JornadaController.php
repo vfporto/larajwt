@@ -39,7 +39,7 @@ class JornadaController extends Controller
 
     public function destroy($id){
         $jornada = Jornada::find($id);
-        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        if(!$jornada){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
         $jornada->delete();
     }
 }

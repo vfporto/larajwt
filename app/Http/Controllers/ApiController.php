@@ -71,12 +71,37 @@ class ApiController extends Controller
 
     public function getAuthUser(Request $request)
     {
-        $this->validate($request, [
-            'token' => 'required'
+        $this->validate($request, ['token' => 'required']);
+        $user = JWTAuth::authenticate($request->token);
+        return response()->json(['user' => $user]);
+    }
+
+    public function refresh(Request $request){
+        $newToken = JWTAuth::refresh($request->token);
+        return response()->json([
+            'success' => true,
+            'token' => $newToken,
+        ]);
+    }
+    //------------------------------------- copiado do leozao ---------------
+    // Renovação de Token
+    /*public function refresh()
+    {
+        $token = JWTAuth::getToken();
+        $newToken = JWTAuth::refresh($token);
+        return response()->json([
+            'token' => $newToken
         ]);
 
-        $user = JWTAuth::authenticate($request->token);
-
-        return response()->json(['user' => $user]);
+    }*/
+    // Retorna as informações da sessão atual
+    public function me(){
+        return response()->json(Auth::user());
+    }
+    // Invalida a sessão atual
+    public function logout2(){
+        $token = JWTAuth::getToken();
+        JWTAuth::invalidate($token);
+        return response()->json([ 'status' => 'success' ]);
     }
 }

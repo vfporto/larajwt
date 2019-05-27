@@ -69,8 +69,8 @@ class UsuariosController extends Controller
         if (!$request->filled('tipo_usuario_id'))
             $usuario->fill(['tipo_usuario_id' => $request->input('tipoUsuario.id')]);
 
-        if (!$request->filled('area_id'))
-            $usuario->fill(['area_id' => $request->input('area.id')]);
+        /*if (!$request->filled('area_id'))
+            $usuario->fill(['area_id' => $request->input('area.id')]);*/
 
         $usuario->save();
 

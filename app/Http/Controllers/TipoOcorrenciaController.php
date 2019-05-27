@@ -39,7 +39,7 @@ class TipoOcorrenciaController extends Controller
 
     public function destroy($id){
         $tipoOcorrencia = TipoOcorrencia::find($id);
-        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        if(!$tipoOcorrencia){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
         $tipoOcorrencia->delete();
     }
 }

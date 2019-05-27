@@ -16,8 +16,8 @@ class CreateJornadasTable extends Migration
         Schema::create('jornadas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome',50);
-            $table->timestamp('entrada')->nullable();
-            $table->timestamp('saida')->nullable();
+            $table->time('entrada')->nullable();
+            $table->time('saida')->nullable();
             $table->timestamps();
         });
     }

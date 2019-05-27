@@ -39,7 +39,7 @@ class TipoJustificativaController extends Controller
 
     public function destroy($id){
         $tipoJustificativa = TipoJustificativa::find($id);
-        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        if(!$tipoJustificativa){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
         $tipoJustificativa->delete();
     }
 }

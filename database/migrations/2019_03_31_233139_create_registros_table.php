@@ -15,7 +15,7 @@ class CreateRegistrosTable extends Migration
     {
         Schema::create('registros', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamp('horario');
+            $table->time('horario');
 
             //$table->unsignedBigInteger('usuario_id');
             //$table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');

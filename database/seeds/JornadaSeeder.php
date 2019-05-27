@@ -12,16 +12,16 @@ class JornadaSeeder extends Seeder
      */
     public function run()
     {
-       App\Jornada::create([
-           'nome' => 'Turno manhã',
-           'entrada' => Carbon::createFromTime(8)->toTimeString(),
-           'saida' => Carbon::createFromTime(12)->toTimeString()
-       ]);
+        App\Jornada::create([
+            'nome' => 'Turno manhã',
+            'entrada' => Carbon::createFromTime(8)->toTimeString(),
+            'saida' => Carbon::createFromTime(12)->toTimeString()
+        ]);
 
        App\Jornada::create([
-        'nome' => 'Turno tarde',
-        'entrada' => Carbon::createFromTime(14)->toTimeString(),
-        'saida' => Carbon::createFromTime(18)->toTimeString()
-    ]);
+            'nome' => 'Turno tarde',
+            'entrada' => Carbon::createFromTime(14)->toTimeString(),
+            'saida' => Carbon::createFromTime(18)->toTimeString()
+        ]);
     }
 }

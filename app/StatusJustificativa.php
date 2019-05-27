@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StatusOcorrencia extends Model
+class StatusJustificativa extends Model
 {
     protected $fillable = ['nome', 'codigo', 'descricao'];
     protected $hidden = ['created_at', 'updated_at','deleted_at'];

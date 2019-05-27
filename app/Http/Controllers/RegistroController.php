@@ -42,44 +42,49 @@ class RegistroController extends Controller
 
     public function destroy($id){
         $registro = Registro::find($id);
-        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        if(!$registro){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
         $registro->delete();
     }
 
-    public function registrarPonto($cartao, $unixTime){
+    //public function registrarPonto($cartao, $unixTime){
+    public function registrarPonto(Request $request){
 
-        $dataHora = Carbon::createFromTimestamp($unixTime);
+        //$dataHora = Carbon::createFromTimestamp($unixTime);
+        //$usuario = Usuario::where('cartao','=',$cartao);
 
-        $usuario = Usuario::where('cartao','=',$cartao);
+        $dataHora = Carbon::createFromTimestamp($request->unixTime);
         $data = $dataHora->toDateString();
         $hora = $dataHora->toTimeString();
 
-        /*//$rd = $registroDiario
-        $registroDiario = RegistroDiario::were([
-            ['dia','=',$data],
-            ['usuario_id','=',$usuario->id]
-        ])->first();*/
+        $usuario = Usuario::where('cartao','=',$request->cartao)->first();
+        if(!$usuario){ return response()->json(['erro' => 'Não autorizado!'], 404); } //ou 403
 
-        $registroDiario = RegistroDiario::where('dia','=', $data)
-            ->where('usuario_id','=',$usuario->id);
-            //->first();
-            dd($registroDiario);
+
+        $registroDiario = RegistroDiario::where('dia', $data)
+            ->where('usuario_id', $usuario->id)->first();
+            //dd($registroDiario);
 
         if(!$registroDiario){
-            $registroDiario = new RegistroDiario;
+            $registroDiario = new RegistroDiario();
             $registroDiario->dia = $data;
-            $registroDiario->usuario = $usuario;
-            $registro->save();
+            $registroDiario->usuario_id = $usuario->id;
+            $registroDiario->save();
         }
+        if(!$registroDiario){ return response()->json(['erro' => 'Reg Diario não criado!'], 403); } //ou 403
+
+        $registro = new Registro();
+        $registro->horario = $hora;
+        $registro->registro_diario_id = $registroDiario->id;
+        $registro->save();
+        if(!$registro){ return response()->json(['erro' => 'Reg não criado!'], 403); }
 
         //Teste Retorno...
         return response()->json([
             'usuario' => $usuario,
             'data' => $data,
-            'hora' => $hora
+            'hora' => $hora,
+            'registro' => $registro
         ]);
-
-
-
     }
+
 }

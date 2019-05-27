@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +14,9 @@ use Carbon\CarbonTimeZone;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
 
 Route::get('/', function () {
     return response()->json([
@@ -30,20 +30,25 @@ Route::get('/time', function () {
 });
 
 
+
+
+
+
+
+Route::post('registrarPonto', 'RegistroController@registrarPonto');
+
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
 
+
+
+/********************************************************
+ *  ROTAS PROTEGIDAS
+ ********************************************************/
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('logout', 'ApiController@logout');
 
-    Route::get('user', 'ApiController@getAuthUser');
-
-    /*Route::get('products', 'ProductController@index');
-    Route::get('products/{id}', 'ProductController@show');
-    Route::post('products', 'ProductController@store');
-    Route::put('products/{id}', 'ProductController@update');
-    Route::delete('products/{id}', 'ProductController@destroy');*/
-
+    //Resources
     Route::resource('usuarios', 'UsuariosController');
     Route::resource('areas', 'AreaController');
     Route::resource('feriados', 'FeriadoController');
@@ -52,12 +57,39 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::resource('tiposJustificativa', 'TipoJustificativaController');
     Route::resource('tipoUsuario', 'TipoUsuarioController');
 
+    //Route::get('user', 'ApiController@getAuthUser');
+    Route::get('user', function (Request $request) {
+        return response()->json($request->user());
+    });
+
+    Route::get('frequenciaMensal', 'RegistroDiarioController@frequenciaMensal');
+    //frequenciaByIdPeriodo
+    //frequenciaByIdAnoMes
+
+
+    Route::get('me', 'ApiController@me');
+    Route::get('refresh', 'ApiController@refresh');
+
 });
+//----------------------- FIM ROTAS PROTEGIDAS -----------------------------------
 
-
+Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@frequenciaByIdAnoMes');
 
 
 
 
 Route::resource('usuarioz', 'UsuariosController');
 Route::resource('tipo_usuarioz', 'TipoUsuariosController');
+
+
+
+
+Route::get('/teste', function () {
+    //return Carbon::createFromTime(12)->toTimeString();
+    //return Carbon::createMidnightDate(now())->firstOfMonth()->toDateString();
+    //return Carbon::now()->createMidnightDate()->toDateTimeString();//->firstOfMonth()->toDateString();
+    //dd(Carbon::createFromDate('2019-04-22'));
+    return Carbon::createFromDate('2019-04-22')->toDateTimeString();
+});
+
+

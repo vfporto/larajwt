@@ -48,9 +48,7 @@ class TipoUsuariosController extends Controller
 
     public function destroy($id){
         $tipo = TipoUsuario::find($id);
-        if(!tipo){
-            return response()->json(['erro' => 'Registro não encontrado'], 404);
-        }
+        if(!$tipo){return response()->json(['erro' => 'Registro não encontrado'], 404);}
         $tipo->delete();
     }
 

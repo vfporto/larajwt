@@ -39,7 +39,7 @@ class FeriadoController extends Controller
 
     public function destroy($id){
         $feriado = Feriado::find($id);
-        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        if(!$feriado){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
         $feriado->delete();
     }
 }

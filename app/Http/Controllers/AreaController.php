@@ -39,7 +39,7 @@ class AreaController extends Controller
 
     public function destroy($id){
         $area = Area::find($id);
-        if(!tipo){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        if(!$area){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
         $area->delete();
     }
 
