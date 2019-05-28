@@ -57,10 +57,10 @@ class OcorrenciaController extends Controller
     }
 
     public function gerarOcorrenciasPorDataPorUsuario($userId, $data) {
-
         $dt = Carbon::createFromDate($data);
-        if($dt->isWeekday()){                   //Se for dia de semana
-            if(!Feriado::where('dia',$data)){   //E não for feriado
+
+        if($dt->isWeekday()){                               //Se for dia de semana
+            if(!Feriado::where('data',$data)->first()){     //E não for feriado
 
                 //Recupera o registro diario do empregado
                 //$registroDiario = new RegistroDiarioController()->getByUserIdByDate($userId, $date); //nao funcionou... verificar pq
@@ -72,14 +72,13 @@ class OcorrenciaController extends Controller
                 //Se não houver registro diario, criar um...
                 if(!$registroDiario){
                     $registroDiario = new RegistroDiario(); //criar construtor com parametros... assim é um *** fazer...
-                    $registroDiario->fill([
-                        'dia' => $data,
-                        'usuario_id' => $userId
-                    ])->save();
+                    $registroDiario->dia = $data;
+                    $registroDiario->usuario_id = $userId;
+                    $registroDiario->save();
                 }
-
+                //dd($registroDiario);
                 //Gerar ocorrencias para este registro diario
-                return gerarOcorrenciasByRegistroDiario($registroDiario);
+                return $this->gerarOcorrenciasByRegistroDiario($registroDiario);
             }
         }
     }

@@ -8,7 +8,7 @@ use App\TipoUsuario;
 //use App\Http\Controllers\Controller;
 
 
-class TipoUsuariosController extends Controller
+class TipoUsuarioController extends Controller
 {
     public function index(){
         $lista = TipoUsuario::all();
