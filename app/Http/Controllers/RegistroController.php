@@ -60,13 +60,13 @@ class RegistroController extends Controller
         if(!$usuario){ return response()->json(['erro' => 'Não autorizado!'], 404); } //ou 403
 
 
-        $registroDiario = RegistroDiario::where('dia', $data)
+        $registroDiario = RegistroDiario::where('data', $data)
             ->where('usuario_id', $usuario->id)->first();
             //dd($registroDiario);
 
         if(!$registroDiario){
             $registroDiario = new RegistroDiario();
-            $registroDiario->dia = $data;
+            $registroDiario->data = $data;
             $registroDiario->usuario_id = $usuario->id;
             $registroDiario->save();
         }

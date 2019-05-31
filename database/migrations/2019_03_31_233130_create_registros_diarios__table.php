@@ -15,7 +15,7 @@ class CreateRegistrosDiariosTable extends Migration
     {
         Schema::create('registros_diarios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('dia');
+            $table->date('data');
 
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('restrict');

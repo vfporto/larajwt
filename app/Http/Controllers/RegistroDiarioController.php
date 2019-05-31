@@ -10,7 +10,8 @@ use Carbon\CarbonImmutable;
 
 class RegistroDiarioController extends Controller {
     public function index() {
-        $lista = RegistroDiario::all();
+        $lista = RegistroDiario::with(['registros', 'ocorrencias'])->get();
+        //dd($lista);
         return response()->json($lista);
     }
 
@@ -72,8 +73,8 @@ class RegistroDiarioController extends Controller {
         $dataini = $data->firstOfMonth();
         $datafim = $data->lastOfMonth();
         $lista = RegistroDiario::where('usuario_id', $usuario->id)
-            ->whereDate('dia', '>=', $dataini)
-            ->whereDate('dia', '<=', $datafim)
+            ->whereDate('data', '>=', $dataini)
+            ->whereDate('data', '<=', $datafim)
             ->with('registros') //TODO: alterar pra enviar uma string unica com os registros
             ->get();
 
@@ -95,9 +96,9 @@ class RegistroDiarioController extends Controller {
     public function frequenciaByIdPeriodo($userId, $dataini, $datafim){
 
         $lista = RegistroDiario::where('usuario_id', $userId)
-            ->whereDate('dia', '>=', $dataini)
-            ->whereDate('dia', '<=', $datafim)
-            ->with('registros') //TODO: alterar pra enviar uma string unica com os registros
+            ->whereDate('data', '>=', $dataini)
+            ->whereDate('data', '<=', $datafim)
+            ->with([ 'registros', 'ocorrencias' ]) //TODO: alterar pra enviar uma string unica com os registros
             ->get();
 
         return response()->json([

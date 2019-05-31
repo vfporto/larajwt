@@ -8,9 +8,9 @@ class RegistroDiario extends Model
 {
 
     protected $table = 'registros_diarios';
-    protected $fillable = ['dia'];
+    protected $fillable = ['data'];
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'usuario_id'];
-    protected $dates = ['dia', 'created_at', 'updated_at','deleted_at'];
+    protected $dates = ['data', 'created_at', 'updated_at','deleted_at'];
 
 
 

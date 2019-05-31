@@ -83,13 +83,25 @@ Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@freque
 
 
  //HACKZ
- Route::resource('usuarioz', 'UsuariosController');
+ /*Route::resource('usuarioz', 'UsuariosController');
  Route::resource('areaz', 'AreaController');
  Route::resource('feriadoz', 'FeriadoController');
  Route::resource('jornadaz', 'JornadaController');
  Route::resource('tiposOcorrenciaz', 'TipoOcorrenciaController');
  Route::resource('tiposJustificativaz', 'TipoJustificativaController');
  Route::resource('tipoUsuarioz', 'TipoUsuarioController');
+*/
+ Route::apiResources([
+    'usuarioz' => 'UsuariosController',
+    'areaz' => 'AreaController',
+    'feriadoz' => 'FeriadoController',
+    'jornadaz' => 'JornadaController',
+    'tiposOcorrenciaz' => 'TipoOcorrenciaController',
+    'tiposJustificativaz' => 'TipoJustificativaController',
+    'tipoUsuarioz' => 'TipoUsuarioController',
+    'registroz' => 'RegistroController',
+    'registroDiarioz' => 'RegistroDiarioController',
+ ]);
 
 
 
@@ -103,3 +115,7 @@ Route::get('/teste', function () {
 });
 
 
+Route::fallback(function(){
+    return response()->json([
+        'message' => '404 - Pagina nao encontrada'], 404);
+});

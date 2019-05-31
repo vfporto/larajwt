@@ -20,7 +20,7 @@ class RegistroSeeder extends Seeder
         for($i=0; $i <= 31; $i++):
             $data = Carbon::createFromDate($ano, $mes, $i);
 
-            $rd = RegistroDiario::where('dia', $data->toDateString())
+            $rd = RegistroDiario::where('data', $data->toDateString())
                     ->where('usuario_id', $userId)->first();
 
             if($rd){

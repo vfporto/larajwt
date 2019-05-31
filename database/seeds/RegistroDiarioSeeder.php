@@ -18,13 +18,13 @@ class RegistroDiarioSeeder extends Seeder
         endfor;
     }
 
-    private function createRegistroDiario($userId, $dia){
-        $data = Carbon::createFromDate(2019,1,$dia);
+    private function createRegistroDiario($userId, $data){
+        $data = Carbon::createFromDate(2019,1,$data);
 
         if($data->isWeekday()){
             App\RegistroDiario::create([
                 'usuario_id' => $userId,
-                'dia' => $data->toDateString(),
+                'data' => $data->toDateString(),
             ]);
         }
 

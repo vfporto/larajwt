@@ -8,6 +8,7 @@ use App\RegistroDiario;
 use App\Registro;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\TipoOcorrencia;
 
 class OcorrenciaController extends Controller
 {
@@ -64,15 +65,15 @@ class OcorrenciaController extends Controller
 
                 //Recupera o registro diario do empregado
                 //$registroDiario = new RegistroDiarioController()->getByUserIdByDate($userId, $date); //nao funcionou... verificar pq
-                $registroDiario = RegistroDiario::where('dia', $data)
+                $registroDiario = RegistroDiario::where('data', $data)
                     ->where('usuario_id', $userId)
-                    ->with('registros')
+                    ->with(['registros','ocorrencias'])
                     ->first();
 
                 //Se não houver registro diario, criar um...
                 if(!$registroDiario){
                     $registroDiario = new RegistroDiario(); //criar construtor com parametros... assim é um *** fazer...
-                    $registroDiario->dia = $data;
+                    $registroDiario->data = $data;
                     $registroDiario->usuario_id = $userId;
                     $registroDiario->save();
                 }
@@ -84,7 +85,21 @@ class OcorrenciaController extends Controller
     }
 
     public function gerarOcorrenciasByRegistroDiario($registroDiario){
-        dd($registroDiario);
+        //dd($registroDiario);
+        /**
+         * VERIFICA FALTA INTEGRAL
+         */
+        $ocorrencia = null;
+        //dd($registroDiario->registros);
+        if(!(empty($registroDiario->registros))) {
+            //dd("Oi");
+            $ocorrencia = new Ocorrencia();
+            $ocorrencia->tipo_ocorrencia_id = TipoOcorrencia::where('codigo', 'FAI')->first()->id;
+            $ocorrencia->registro_diario_id = $registroDiario->id;
+            $ocorrencia->save();
+        }
+        dd($registroDiario, $ocorrencia);
+
     }
 
 
