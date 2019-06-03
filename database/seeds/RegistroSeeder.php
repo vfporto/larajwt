@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\RegistroDiario;
+use App\Usuario;
 
 class RegistroSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class RegistroSeeder extends Seeder
      */
     public function run()
     {
-        $userId = 1;
+        /*$userId = 1;
         $mes = 1;
         $ano = 2019;
 
@@ -29,7 +30,42 @@ class RegistroSeeder extends Seeder
                 $this->createRegistro($rd->id, '14:00:00');
                 $this->createRegistro($rd->id, '18:00:00');
             }
-        endfor;
+        endfor;*/
+
+
+        $usuarios = Usuario::with('registrosDiarios', 'jornadas')->get();
+        //$lista = RegistroDiario::all();
+        foreach ($usuarios as $usuario) {
+            //dd($usuario);
+            foreach ($usuario->registrosDiarios as $rd) {
+                //dd($rd);
+                foreach ($usuario->jornadas as $jornada) {
+                    //dd($usuario->jornadas);
+                    $num = rand(0, 15); //chance de 1 em 15 de não marcar...
+                    if($num > 0) {
+                        $hora = Carbon::create($jornada->entrada)
+                            ->subMinutes(rand(0, 20))
+                            ->addMinutes(rand(0, 30))
+                            ->toTimeString();
+                            //dd($hora);
+                        $this->createRegistro($rd->id, $hora);
+                    }
+
+                    $num = rand(0, 15); //chance de 1 em 15 de não marcar...
+                    if($num > 0) {
+                        $hora = Carbon::create($jornada->saida)
+                            ->subMinutes(rand(0, 20))
+                            ->addMinutes(rand(0, 30))
+                            ->toTimeString();
+                        $this->createRegistro($rd->id, $hora);
+                    }
+                }
+                //dd(RegistroDiario::with('registros')->find($rd->id));
+            }
+
+        }
+
+
     }
 
     private function createRegistro($rd_id, $hora){

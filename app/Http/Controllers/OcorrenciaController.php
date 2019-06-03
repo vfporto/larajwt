@@ -85,20 +85,26 @@ class OcorrenciaController extends Controller
     }
 
     public function gerarOcorrenciasByRegistroDiario($registroDiario){
-        //dd($registroDiario);
-        /**
-         * VERIFICA FALTA INTEGRAL
-         */
+
         $ocorrencia = null;
         //dd($registroDiario->registros);
         if(!(empty($registroDiario->registros))) {
-            //dd("Oi");
+
+            // Falta Integral
+
             $ocorrencia = new Ocorrencia();
             $ocorrencia->tipo_ocorrencia_id = TipoOcorrencia::where('codigo', 'FAI')->first()->id;
             $ocorrencia->registro_diario_id = $registroDiario->id;
             $ocorrencia->save();
+        } else {
+
+
         }
         dd($registroDiario, $ocorrencia);
+
+
+
+
 
     }
 
@@ -109,7 +115,7 @@ class OcorrenciaController extends Controller
 
 
     public function verificaFaltaIntegral($registroDiarioId) {
-
+        //estou fazendo tudo no método gerarOcorrencia
     }
 
 

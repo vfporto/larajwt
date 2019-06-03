@@ -18,9 +18,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TipoUsuarioSeeder::class,
             AreaSeeder::class,
+            JornadaSeeder::class,
             UserSeeder::class,
             UsuarioSeeder::class,
-            JornadaSeeder::class,
+            FeriadoSeeder::class,
             RegistroDiarioSeeder::class,
             RegistroSeeder::class,
             TipoOcorrenciaSeeder::class,

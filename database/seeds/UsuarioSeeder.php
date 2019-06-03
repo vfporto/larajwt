@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Usuario;
 
 class UsuarioSeeder extends Seeder
 {
@@ -64,5 +65,11 @@ class UsuarioSeeder extends Seeder
             'tipo_usuario_id' => 3,
         ]);
         factory(App\Usuario::class, 10)->create();
+
+        $lista = Usuario::all();
+        foreach ($lista as $user) {
+            $user->jornadas()->attach(1);
+            $user->jornadas()->attach(2);
+        }
     }
 }

@@ -18,20 +18,20 @@ class Usuario extends Authenticatable implements JWTSubject //extends Model
     protected $hidden = ['senha', 'created_at', 'updated_at', 'deleted_at', 'area_id', 'tipo_usuario_id'];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    function tipoUsuario()
-    {
+    function tipoUsuario() {
         return $this->belongsTo('App\TipoUsuario');
     }
 
-    function area()
-    {
+    function area() {
         return $this->belongsTo('App\Area');
     }
 
-    public function jornadas()
-    {
+    public function jornadas() {
         return $this->belongsToMany('App\Jornada', 'jornadas_usuarios', 'usuario_id', 'jornada_id');
+    }
 
+    public function registrosDiarios() {
+        return $this->hasMany('App\RegistroDiario');
     }
 
     /**
