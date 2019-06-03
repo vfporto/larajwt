@@ -66,7 +66,7 @@ class OcorrenciaController extends Controller
                 //Recupera o registro diario do empregado
                 //$registroDiario = new RegistroDiarioController()->getByUserIdByDate($userId, $date); //nao funcionou... verificar pq
                 $registroDiario = RegistroDiario::where('data', $data)
-                    ->where('usuario_id', $userId)
+                    ->where('user_id', $userId)
                     ->with(['registros','ocorrencias'])
                     ->first();
 
@@ -74,7 +74,7 @@ class OcorrenciaController extends Controller
                 if(!$registroDiario){
                     $registroDiario = new RegistroDiario(); //criar construtor com parametros... assim é um *** fazer...
                     $registroDiario->data = $data;
-                    $registroDiario->usuario_id = $userId;
+                    $registroDiario->user_id = $userId;
                     $registroDiario->save();
                 }
                 //dd($registroDiario);

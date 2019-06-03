@@ -13,9 +13,9 @@ class CreateJornadasUsuariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('jornadas_usuarios', function (Blueprint $table) {
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
+        Schema::create('jornadas_users', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('jornada_id');
             $table->foreign('jornada_id')->references('id')->on('jornadas')->onDelete('cascade');
@@ -31,7 +31,7 @@ class CreateJornadasUsuariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jornadas_usuarios');
+        Schema::dropIfExists('jornadas_users');
     }
 
 }

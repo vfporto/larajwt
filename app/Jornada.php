@@ -13,7 +13,7 @@ class Jornada extends Model
 
     public function funcionarios()
     {
-        return $this->belongsToMany('App\Usuario', 'jornadas_usuarios', 'jornada_id', 'usuario_id');
+        return $this->belongsToMany('App\User', 'jornadas_users', 'jornada_id', 'user_id');
     }
 
 }

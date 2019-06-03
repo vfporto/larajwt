@@ -10,13 +10,13 @@ class RegistroDiario extends Model
     protected $table = 'registros_diarios';
 
     protected $fillable = ['data'];
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'usuario_id'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'user_id'];
     protected $dates = ['data', 'created_at', 'updated_at','deleted_at'];
 
 
 
-    function usuario() {
-        return $this->belongsTo('App\Usuario');
+    function user() {
+        return $this->belongsTo('App\User');
     }
 
     function registros() {

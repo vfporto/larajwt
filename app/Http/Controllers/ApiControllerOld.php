@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Area;
-use App\Usuario;
 use Illuminate\Support\Facades\Hash;
 
 class ApiControllerOld extends Controller
@@ -64,24 +63,24 @@ class ApiControllerOld extends Controller
         //$credentials = $request->only('login', 'senha');
         $credentials = request(['login', 'senha']);
 
-        $usuario = Usuario::where('login', $credentials['login'])->first();
+        $user = User::where('login', $credentials['login'])->first();
 
-        if (!$usuario) {
-            return response()->json(['error' => 'Invalid usuario'], 401);
+        if (!$user) {
+            return response()->json(['error' => 'Invalid user'], 401);
         }
 
 
         // Validate Password
-        if (!Hash::check($credentials['senha'], $usuario->senha)) {
+        if (!Hash::check($credentials['senha'], $user->senha)) {
             return response()->json([
                 'error' => 'Senha invalida'/*,
                 'hash1' => Hash::make($credentials['senha']),
-                'hash2' => Hash::make($usuario->senha),
+                'hash2' => Hash::make($user->senha),
 
             */], 401);
         }
         // Generate Token
-        $token = JWTAuth::fromUser($usuario);
+        $token = JWTAuth::fromUser($user);
 
         // Get expiration time
         $objectToken = JWTAuth::setToken($token);

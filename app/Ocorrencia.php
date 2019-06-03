@@ -13,7 +13,7 @@ class Ocorrencia extends Model
     public function tipoOcorrencia()
     {
         return $this->belongsTo('App\TipoOcorrencia','tipo_ocorrencia_id');
-        //return $this->belongsToMany('App\Usuario', 'jornadas_usuarios', 'jornada_id', 'usuario_id');
+        //return $this->belongsToMany('App\User', 'jornadas_users', 'jornada_id', 'user_id');
     }
 
     public function registroDiario() {

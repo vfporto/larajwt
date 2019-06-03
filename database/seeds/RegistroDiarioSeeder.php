@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
-use App\Usuario;
+use App\User;
 use App\Feriado;
 
 class RegistroDiarioSeeder extends Seeder
@@ -21,15 +21,15 @@ class RegistroDiarioSeeder extends Seeder
         $periodo = CarbonPeriod::create($inicio, $fim);
 
         //$userId = 1;
-        $usuarios = Usuario::all();
-        foreach ($usuarios as $usuario) {
+        $users = User::all();
+        foreach ($users as $user) {
             foreach ($periodo as $key => $data) {
                 $num = rand(0, 14); // aprox. 7% de chances
                 if ($num > 0) {
                     if ($data->isWeekday()) {
                         if (!Feriado::where('data', $data)->first()) {
                             App\RegistroDiario::create([
-                                'usuario_id' => $usuario->id,
+                                'user_id' => $user->id,
                                 'data' => $data->toDateString(),
                             ]);
                         }
@@ -50,7 +50,7 @@ class RegistroDiarioSeeder extends Seeder
 
         if($data->isWeekday()){
             App\RegistroDiario::create([
-                'usuario_id' => $userId,
+                'user_id' => $userId,
                 'data' => $data->toDateString(),
             ]);
         }

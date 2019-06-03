@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             AreaSeeder::class,
             JornadaSeeder::class,
             UserSeeder::class,
-            UsuarioSeeder::class,
+            //UsuarioSeeder::class,
             FeriadoSeeder::class,
             RegistroDiarioSeeder::class,
             RegistroSeeder::class,

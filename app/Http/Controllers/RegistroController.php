@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Registro;
 use App\RegistroDiario;
-use App\Usuario;
+use App\User;
 use Carbon\Carbon;
 
 class RegistroController extends Controller
@@ -50,24 +50,24 @@ class RegistroController extends Controller
     public function registrarPonto(Request $request){
 
         //$dataHora = Carbon::createFromTimestamp($unixTime);
-        //$usuario = Usuario::where('cartao','=',$cartao);
+        //$user = User::where('cartao','=',$cartao);
 
         $dataHora = Carbon::createFromTimestamp($request->unixTime);
         $data = $dataHora->toDateString();
         $hora = $dataHora->toTimeString();
 
-        $usuario = Usuario::where('cartao','=',$request->cartao)->first();
-        if(!$usuario){ return response()->json(['erro' => 'Não autorizado!'], 404); } //ou 403
+        $user = User::where('cartao','=',$request->cartao)->first();
+        if(!$user){ return response()->json(['erro' => 'Não autorizado!'], 404); } //ou 403
 
 
         $registroDiario = RegistroDiario::where('data', $data)
-            ->where('usuario_id', $usuario->id)->first();
+            ->where('user_id', $user->id)->first();
             //dd($registroDiario);
 
         if(!$registroDiario){
             $registroDiario = new RegistroDiario();
             $registroDiario->data = $data;
-            $registroDiario->usuario_id = $usuario->id;
+            $registroDiario->user_id = $user->id;
             $registroDiario->save();
         }
         if(!$registroDiario){ return response()->json(['erro' => 'Reg Diario não criado!'], 403); } //ou 403
@@ -80,7 +80,7 @@ class RegistroController extends Controller
 
         //Teste Retorno...
         return response()->json([
-            'usuario' => $usuario,
+            'user' => $user,
             'data' => $data,
             'hora' => $hora,
             'registro' => $registro

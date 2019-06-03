@@ -12,12 +12,12 @@ class UsuarioSeeder extends Seeder
      */
     public function run()
     {
-        /*App\Usuario::create([
+        /*App\User::create([
             'login' => str_random(10),
             'senha' => bcrypt('secret'),
             'tipo_usuario_id' => 1
        ]);*/
-        App\Usuario::create([
+        App\User::create([
             'login' => 'vfporto',
             'password' => bcrypt('123456'),
 
@@ -28,45 +28,68 @@ class UsuarioSeeder extends Seeder
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 1,
         ]);
-
-        App\Usuario::create([
-            'login' => 'funcionario',
+        App\User::create([
+            'login' => 'jefferson',
             'password' => bcrypt('123456'),
 
             'matricula' => 10001,
-            'nome' => 'funcionario',
-            'email' => 'funcionario',
+            'nome' => 'Jefferson',
+            'email' => 'jefferson@jefferson',
             'cartao' => '10001',
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 1,
         ]);
 
-        App\Usuario::create([
-            'login' => 'gerente',
+        App\User::create([
+            'login' => 'fernando',
             'password' => bcrypt('123456'),
 
             'matricula' => 10002,
+            'nome' => 'Fernando',
+            'email' => 'fernando@fernando',
+            'cartao' => '10002',
+            /*'area_id' => 1,*/
+            'tipo_usuario_id' => 1,
+        ]);
+
+        App\User::create([
+            'login' => 'funcionario',
+            'password' => bcrypt('123456'),
+
+            'matricula' => 10005,
+            'nome' => 'funcionario',
+            'email' => 'funcionario',
+            'cartao' => '10005',
+            /*'area_id' => 1,*/
+            'tipo_usuario_id' => 1,
+        ]);
+
+        App\User::create([
+            'login' => 'gerente',
+            'password' => bcrypt('123456'),
+
+            'matricula' => 10006,
             'nome' => 'gerente',
             'email' => 'gerente',
-            'cartao' => '10002',
+            'cartao' => '10006',
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 2,
         ]);
 
-        App\Usuario::create([
+        App\User::create([
             'login' => 'gestor',
             'password' => bcrypt('123456'),
 
-            'matricula' => 10003,
+            'matricula' => 10007,
             'nome' => 'gestor',
             'email' => 'gestor',
-            'cartao' => '10003',
+            'cartao' => '10007',
             /*'area_id' => 1,*/
             'tipo_usuario_id' => 3,
         ]);
-        factory(App\Usuario::class, 10)->create();
+        factory(App\User::class, 10)->create();
 
-        $lista = Usuario::all();
+        $lista = User::all();
         foreach ($lista as $user) {
             $user->jornadas()->attach(1);
             $user->jornadas()->attach(2);

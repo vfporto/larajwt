@@ -17,8 +17,8 @@ class CreateRegistrosTable extends Migration
             $table->bigIncrements('id');
             $table->time('horario');
 
-            //$table->unsignedBigInteger('usuario_id');
-            //$table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
+            //$table->unsignedBigInteger('user_id');
+            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('registro_diario_id');
             $table->foreign('registro_diario_id')->references('id')->on('registros_diarios')->onDelete('restrict');

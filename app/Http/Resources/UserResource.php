@@ -6,7 +6,7 @@ use App\Area;
 use App\TipoUsuario;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UsuarioResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

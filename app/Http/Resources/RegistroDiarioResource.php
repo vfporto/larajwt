@@ -3,11 +3,11 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Usuario;
+use App\User;
 use App\Registro;
 use App\Ocorrencia;
 
-class RegistroDiario extends JsonResource
+class RegistroDiarioResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,7 +21,7 @@ class RegistroDiario extends JsonResource
             'id' => $this->id,
             'data' => $this->data,
 
-            'usuario' => Usuario::find($this->usuario),
+            'user' => User::find($this->user),
             'registros' => Registro::where('registro_diario_id', $this->id)->get(),
             'ocorrencias' => Ocorrencia::where('registro_diario_id', $this->id)->get(),
 

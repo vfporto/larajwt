@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\RegistroDiario;
-use App\Usuario;
+use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -50,7 +50,7 @@ class RegistroDiarioController extends Controller {
 
 
     public function frequenciaMensal(Request $request){
-        $usuario = $request->user();
+        $user = $request->user();
 
         if($request->data){ $data = CarbonImmutable::createFromDate($request->data); }
         else { $data = CarbonImmutable::now(); }
@@ -58,10 +58,10 @@ class RegistroDiarioController extends Controller {
         $dataini = $data->firstOfMonth();
         $datafim = $data->lastOfMonth();
 
-        return $this->frequenciaByIdPeriodo($usuario->id, $dataini, $datafim);
+        return $this->frequenciaByIdPeriodo($user->id, $dataini, $datafim);
 
         /*
-        $usuario = $request->user();
+        $user = $request->user();
 
         if($request->data){
             $data = CarbonImmutable::createFromDate($request->data);
@@ -72,14 +72,14 @@ class RegistroDiarioController extends Controller {
 
         $dataini = $data->firstOfMonth();
         $datafim = $data->lastOfMonth();
-        $lista = RegistroDiario::where('usuario_id', $usuario->id)
+        $lista = RegistroDiario::where('user_id', $user->id)
             ->whereDate('data', '>=', $dataini)
             ->whereDate('data', '<=', $datafim)
             ->with('registros') //TODO: alterar pra enviar uma string unica com os registros
             ->get();
 
         return response()->json([
-            'user' =>  $usuario,
+            'user' =>  $user,
             'dataini' => $dataini,
             'datafim' => $datafim,
             'lista' => $lista
@@ -95,14 +95,14 @@ class RegistroDiarioController extends Controller {
 
     public function frequenciaByIdPeriodo($userId, $dataini, $datafim){
 
-        $lista = RegistroDiario::where('usuario_id', $userId)
+        $lista = RegistroDiario::where('user_id', $userId)
             ->whereDate('data', '>=', $dataini)
             ->whereDate('data', '<=', $datafim)
             ->with([ 'registros', 'ocorrencias' ]) //TODO: alterar pra enviar uma string unica com os registros
             ->get();
 
         return response()->json([
-            'user' =>  Usuario::find($userId),
+            'user' =>  User::find($userId),
             'dataini' => $dataini,
             'datafim' => $datafim,
             'lista' => $lista

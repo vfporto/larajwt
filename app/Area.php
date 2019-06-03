@@ -12,9 +12,9 @@ class Area extends Model
 
 
     function gerente() {
-        return $this->belongsTo('App\Usuario');
+        return $this->belongsTo('App\User');
     }
     function funcionarios() {
-        return $this->hasMany('App\Usuario');
+        return $this->hasMany('App\User');
     }
 }

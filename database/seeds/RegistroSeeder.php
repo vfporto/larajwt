@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\RegistroDiario;
-use App\Usuario;
+use App\User;
 
 class RegistroSeeder extends Seeder
 {
@@ -22,7 +22,7 @@ class RegistroSeeder extends Seeder
             $data = Carbon::createFromDate($ano, $mes, $i);
 
             $rd = RegistroDiario::where('data', $data->toDateString())
-                    ->where('usuario_id', $userId)->first();
+                    ->where('user_id', $userId)->first();
 
             if($rd){
                 $this->createRegistro($rd->id, '08:00:00');
@@ -33,14 +33,14 @@ class RegistroSeeder extends Seeder
         endfor;*/
 
 
-        $usuarios = Usuario::with('registrosDiarios', 'jornadas')->get();
+        $users = User::with('registrosDiarios', 'jornadas')->get();
         //$lista = RegistroDiario::all();
-        foreach ($usuarios as $usuario) {
-            //dd($usuario);
-            foreach ($usuario->registrosDiarios as $rd) {
+        foreach ($users as $user) {
+            //dd($user);
+            foreach ($user->registrosDiarios as $rd) {
                 //dd($rd);
-                foreach ($usuario->jornadas as $jornada) {
-                    //dd($usuario->jornadas);
+                foreach ($user->jornadas as $jornada) {
+                    //dd($user->jornadas);
                     $num = rand(0, 15); //chance de 1 em 15 de não marcar...
                     if($num > 0) {
                         $hora = Carbon::create($jornada->entrada)

@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('logout', 'ApiController@logout');
 
     //Resources
-    Route::resource('usuarios', 'UsuariosController');
+    Route::resource('users', 'UserController');
     Route::resource('areas', 'AreaController');
     Route::resource('feriados', 'FeriadoController');
     Route::resource('jornadas', 'JornadaController');
@@ -83,7 +83,7 @@ Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@freque
 
 
  //HACKZ
- /*Route::resource('usuarioz', 'UsuariosController');
+ /*Route::resource('usuarioz', 'UserController');
  Route::resource('areaz', 'AreaController');
  Route::resource('feriadoz', 'FeriadoController');
  Route::resource('jornadaz', 'JornadaController');
@@ -92,7 +92,7 @@ Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@freque
  Route::resource('tipoUsuarioz', 'TipoUsuarioController');
 */
  Route::apiResources([
-    'usuarioz' => 'UsuariosController',
+    'userz' => 'UserController',
     'areaz' => 'AreaController',
     'feriadoz' => 'FeriadoController',
     'jornadaz' => 'JornadaController',

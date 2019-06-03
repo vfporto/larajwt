@@ -40,9 +40,9 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     Route::get('user', 'ApiController@getAuthUser');
 
-    //Route::resource('usuarios', 'UsuariosController');
-    Route::get('usuarios', 'UsuariosController@index');
-    Route::get('usuarios/{id}', 'UsuariosController@show');
+    //Route::resource('users', 'UsuariosController');
+    Route::get('users', 'UsuariosController@index');
+    Route::get('users/{id}', 'UsuariosController@show');
     Route::resource('tipo_usuarios', 'TipoUsuariosController');
 });
 
@@ -50,6 +50,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
 
 
-Route::resource('open_usuarios', 'UsuariosController');
+Route::resource('open_users', 'UsuariosController');
 Route::resource('open_tipo_usuarios', 'TipoUsuariosController');
 

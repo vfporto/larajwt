@@ -15,8 +15,8 @@ class TipoUsuario extends Model
 
     protected $dates = ['deleted_at'];
 
-    function usuarios() {
+    function users() {
         return $this->hasMany('App\TipoUsuario');
-        //return $this->belongsTo('App\Usuario');
+        //return $this->belongsTo('App\User');
     }
 }

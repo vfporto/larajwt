@@ -27,7 +27,7 @@ class Usuario extends Authenticatable implements JWTSubject //extends Model
     }
 
     public function jornadas() {
-        return $this->belongsToMany('App\Jornada', 'jornadas_usuarios', 'usuario_id', 'jornada_id');
+        return $this->belongsToMany('App\Jornada', 'jornadas_usuarios', 'user_id', 'jornada_id');
     }
 
     public function registrosDiarios() {

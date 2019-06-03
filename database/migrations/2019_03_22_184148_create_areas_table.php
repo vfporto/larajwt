@@ -25,11 +25,11 @@ class CreateAreasTable extends Migration
 
         Schema::create('area_funcionario', function (Blueprint $table) {
             $table->unsignedBigInteger('area_id');
-            $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('is_gerente');
 
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
         });
 

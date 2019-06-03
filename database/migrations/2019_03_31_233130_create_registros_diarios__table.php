@@ -17,8 +17,8 @@ class CreateRegistrosDiariosTable extends Migration
             $table->bigIncrements('id');
             $table->date('data');
 
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('restrict');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
 
 
             $table->timestamps();
