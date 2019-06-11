@@ -7,6 +7,8 @@ use App\Registro;
 use App\RegistroDiario;
 use App\User;
 use Carbon\Carbon;
+use PHPUnit\Runner\Exception;
+use PhpParser\Node\Stmt\TryCatch;
 
 class RegistroController extends Controller
 {
@@ -46,39 +48,59 @@ class RegistroController extends Controller
         $registro->delete();
     }
 
-    //public function registrarPonto($cartao, $unixTime){
-    public function registrarPonto(Request $request){
+    public function registrarPontoByRequest(Request $request){
+        //$dataHora = Carbon::createFromTimestamp($request->unixTime);
+        //$user = User::where('cartao','=',$request->cartao)->first();
+        $cartao = $request->cartao;
+        $unixTime = $request->unixTime;
 
-        //$dataHora = Carbon::createFromTimestamp($unixTime);
-        //$user = User::where('cartao','=',$cartao);
+        if(!$cartao)  { return response()->json(['erro' => 'Cartao nao informado!'], 400); }
+        if(!$unixTime) { return response()->json(['erro' => 'Hora não informada!'], 400); }
 
-        $dataHora = Carbon::createFromTimestamp($request->unixTime);
+        return $this->registrarPontoByCartaoHora($cartao, $unixTime);
+    }
+
+
+    public function registrarPontoByCartaoHora($cartao, $unixTime){
+
+        //Tratamento dos inputs
+        $dataHora = null;
+        try{
+            $dataHora = Carbon::createFromTimestamp($unixTime);
+        } catch(Exception $e){
+            return response()->json(['erro' => 'Data invalida!'], 403);
+        }
         $data = $dataHora->toDateString();
         $hora = $dataHora->toTimeString();
 
-        $user = User::where('cartao','=',$request->cartao)->first();
-        if(!$user){ return response()->json(['erro' => 'Não autorizado!'], 404); } //ou 403
+        $user = User::where('cartao', $cartao)->first();
+        if(!$user){ return response()->json(['erro' => 'Cartao nao cadastrado!'], 404); } //ou 403
 
 
+        //Começa criação do Registro
+        //1o verifica se já há registro diário para vincular o registro
         $registroDiario = RegistroDiario::where('data', $data)
             ->where('user_id', $user->id)->first();
-            //dd($registroDiario);
 
+        //Se é o primeiro registro do dia, criar registro diário
         if(!$registroDiario){
-            $registroDiario = new RegistroDiario();
+            $registroDiario = new RegistroDiario(); //TODO: criar consntrutor com parâmentros.. :/
             $registroDiario->data = $data;
             $registroDiario->user_id = $user->id;
             $registroDiario->save();
         }
+        //Caso dê algum BO, retorna erro...
         if(!$registroDiario){ return response()->json(['erro' => 'Reg Diario não criado!'], 403); } //ou 403
 
+        //Com o Registro Diário OK, criar objeto Registro e persistir;
         $registro = new Registro();
         $registro->horario = $hora;
         $registro->registro_diario_id = $registroDiario->id;
         $registro->save();
         if(!$registro){ return response()->json(['erro' => 'Reg não criado!'], 403); }
 
-        //Teste Retorno...
+        //Retorna informaçõs uteis
+        //TODO: verificar se há alguma outra informação útil para retornar
         return response()->json([
             'user' => $user,
             'data' => $data,

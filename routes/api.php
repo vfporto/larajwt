@@ -23,23 +23,28 @@ Route::get('/', function () {
     return response()->json([
         'message' => 'PontuALL API - ONLINE',
         'time' => Carbon::now()->subHours(3)->timestamp,
-        ]);
+    ]);
 });
 
-Route::get('/time', function () {
-    return response()->json(Carbon::now()->subHours(3)->timestamp);
-});
+//Devolve a hora em UnixTime -- usada em testes, já pode ser excluída...
+Route::get('/time', function() {return response()->json(Carbon::now()->subHours(3)->timestamp);});
 
 
 
 
 
 
+//Rota para marcação do ponto com JSON
+//dados JSON: {cartao: numCartao, unixTime: valorUnixTime}
+Route::post('registrarPonto', 'RegistroController@registrarPontoByRequest');
 
-Route::post('registrarPonto', 'RegistroController@registrarPonto');
+//Rota criada a pedidos... exemplo: http://localhost:8000/api/registrarPonto/10000/1560208197
+Route::get('registrarPonto/{cartao}/{unixTime}', 'RegistroController@registrarPontoByCartaoHora');
+
+
 
 Route::post('login', 'ApiController@login');
-Route::post('register', 'ApiController@register');
+//Route::post('register', 'ApiController@register'); //Rota desabilitada pq nossa aplicação usa a funcionalidade
 
 
 
@@ -62,6 +67,10 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('user', function (Request $request) {
         return response()->json($request->user());
     });
+    Route::get('me', 'ApiController@me');
+    Route::get('refresh', 'ApiController@refresh');
+
+
 
     Route::get('frequenciaMensal', 'RegistroDiarioController@frequenciaMensal');
     //teste ocorrencia...
@@ -70,8 +79,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     //frequenciaByIdAnoMes
 
 
-    Route::get('me', 'ApiController@me');
-    Route::get('refresh', 'ApiController@refresh');
+
 
 });
 //----------------------- FIM ROTAS PROTEGIDAS -----------------------------------
