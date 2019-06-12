@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AreaController extends Controller
 {
     public function index(){
-        $lista = TipoUsuario::all();
+        $lista = Area::all();
 
         return response()->json($lista);
     }
