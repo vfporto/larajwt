@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Registro;
 use App\RegistroDiario;
 use App\User;
+use App\Http\Resources\UserResource;
 use Carbon\Carbon;
 use PHPUnit\Runner\Exception;
 use PhpParser\Node\Stmt\TryCatch;
@@ -102,7 +103,7 @@ class RegistroController extends Controller
         //Retorna informaçõs uteis
         //TODO: verificar se há alguma outra informação útil para retornar
         return response()->json([
-            'user' => $user,
+            'user' => new UserResource($user),
             'data' => $data,
             'hora' => $hora,
             'registro' => $registro

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class FeriadoResource extends JsonResource
 {
@@ -14,6 +15,11 @@ class FeriadoResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        //return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'data' => Carbon::parse($this->data)->toDateString()
+        ];
     }
 }

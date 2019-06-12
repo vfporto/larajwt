@@ -55,6 +55,7 @@ class User extends Authenticatable implements JWTSubject
                 'id' => $this->id,
                 'login' => $this->login,
                 'matricula' => $this->matricula,
+                'cartao' => $this->cartao,
                 'nome' => $this->nome,
                 'email' => $this->email,
                 //'senha' => $this->senha,
@@ -80,7 +81,9 @@ class User extends Authenticatable implements JWTSubject
 
 
 
- /* use Notifiable;
+ /*
+    //Classe User Original  --- TODO: excluir
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
