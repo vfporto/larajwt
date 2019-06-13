@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use App\Http\Resources\UserResource;
 
 class RegistroDiarioController extends Controller {
     public function index() {
@@ -102,9 +103,9 @@ class RegistroDiarioController extends Controller {
             ->get();
 
         return response()->json([
-            'user' =>  User::find($userId),
-            'dataini' => $dataini,
-            'datafim' => $datafim,
+            'user' =>  new UserResource(User::find($userId)),
+            'dataini' => $dataini->toDateString(),
+            'datafim' => $datafim->toDateString(),
             'lista' => $lista
         ]);
     }

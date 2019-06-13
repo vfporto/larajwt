@@ -11,7 +11,7 @@ class RegistroDiario extends Model
 
     protected $fillable = ['data'];
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'user_id'];
-    protected $dates = ['data', 'created_at', 'updated_at','deleted_at'];
+    protected $dates = ['data:Y-m-d', 'created_at', 'updated_at','deleted_at'];
 
 
 
