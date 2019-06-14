@@ -37,7 +37,7 @@ $factory->define(User::class, function (Faker $faker) {
         'cartao' => $faker->unique()->numberBetween(10010, 10999),
         //'remember_token' => Str::random(10),
 
-        //'area_id' => 1, //alterado o modelo...
+        'area_id' => 1, //alterado o modelo...
         'tipo_usuario_id' => 1,
     ];
 });

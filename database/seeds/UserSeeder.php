@@ -36,29 +36,29 @@ class UserSeeder extends Seeder {
         ]);
 
 */
-
-
         App\User::create([
             'login' => 'vfporto',
             'password' => bcrypt('123456'),
 
             'matricula' => 10000,
-            'nome' => 'Fabricio',
+            'nome' => 'Vanderley Fabricio Porto',
             'email' => 'vfporto@vfporto',
             'cartao' => '10000',
-            /*'area_id' => 1,*/
+            'area_id' => 1,
             'tipo_usuario_id' => 1,
         ]);
+
+
         App\User::create([
             'login' => 'jefferson',
             'password' => bcrypt('123456'),
 
             'matricula' => 10001,
-            'nome' => 'Jefferson',
+            'nome' => 'Jefferson Rodrigo Sotto',
             'email' => 'jefferson@jefferson',
             'cartao' => '10001',
-            /*'area_id' => 1,*/
-            'tipo_usuario_id' => 1,
+            'area_id' => 1,
+            'tipo_usuario_id' => 3,
         ]);
 
         App\User::create([
@@ -66,11 +66,11 @@ class UserSeeder extends Seeder {
             'password' => bcrypt('123456'),
 
             'matricula' => 10002,
-            'nome' => 'Fernando',
+            'nome' => 'Fernando Satoro Koguti',
             'email' => 'fernando@fernando',
             'cartao' => '10002',
-            /*'area_id' => 1,*/
-            'tipo_usuario_id' => 1,
+            'area_id' => 1,
+            'tipo_usuario_id' => 2,
         ]);
 
         App\User::create([
@@ -78,10 +78,10 @@ class UserSeeder extends Seeder {
             'password' => bcrypt('123456'),
 
             'matricula' => 10005,
-            'nome' => 'funcionario',
+            'nome' => 'Conta Teste Funcionário',
             'email' => 'funcionario',
             'cartao' => '10005',
-            /*'area_id' => 1,*/
+            'area_id' => 2,
             'tipo_usuario_id' => 1,
         ]);
 
@@ -90,10 +90,10 @@ class UserSeeder extends Seeder {
             'password' => bcrypt('123456'),
 
             'matricula' => 10006,
-            'nome' => 'gerente',
+            'nome' => 'Conta Teste Gerente',
             'email' => 'gerente',
             'cartao' => '10006',
-            /*'area_id' => 1,*/
+            'area_id' => 2,
             'tipo_usuario_id' => 2,
         ]);
 
@@ -102,14 +102,15 @@ class UserSeeder extends Seeder {
             'password' => bcrypt('123456'),
 
             'matricula' => 10007,
-            'nome' => 'gestor',
+            'nome' => 'Conta Teste Gestor',
             'email' => 'gestor',
             'cartao' => '10007',
-            /*'area_id' => 1,*/
+            'area_id' => 2,
             'tipo_usuario_id' => 3,
         ]);
-        factory(App\User::class, 10)->create();
+        factory(App\User::class, 3)->create();
 
+        //Adiciona jornadas padrão para os usuários
         $lista = User::all();
         foreach ($lista as $user) {
             $user->jornadas()->attach(1);

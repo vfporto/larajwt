@@ -16,14 +16,14 @@ class CreateAreasTable extends Migration
         Schema::create('areas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome',50);
-            //$table->unsignedBigInteger('gerente_id')->nullable(); //alterado para tabela associativa
+            $table->unsignedBigInteger('gerente_id')->nullable(); //alterado para tabela associativa
 
             $table->timestamps();
             $table->softDeletes();
         });
 
 
-        Schema::create('area_funcionario', function (Blueprint $table) {
+        /* Schema::create('area_funcionario', function (Blueprint $table) {
             $table->unsignedBigInteger('area_id');
             $table->unsignedBigInteger('user_id');
             $table->boolean('is_gerente');
@@ -31,7 +31,7 @@ class CreateAreasTable extends Migration
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-        });
+        }); */
 
     }
 
@@ -42,7 +42,7 @@ class CreateAreasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('area_funcionario');
+        //Schema::dropIfExists('area_funcionario');
         Schema::dropIfExists('areas');
 
     }

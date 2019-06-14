@@ -13,7 +13,7 @@ class AddFksUsuariosAreas extends Migration
      */
     public function up()
     {
-       /* Schema::table('areas', function (Blueprint $table) {
+       Schema::table('areas', function (Blueprint $table) {
             //
             $table->foreign('gerente_id')
                 ->references('id')
@@ -26,7 +26,7 @@ class AddFksUsuariosAreas extends Migration
                 ->references('id')
                 ->on('areas')
                 ->onDelete('cascade');
-        });*/
+        });
     }
 
     /**
@@ -36,7 +36,7 @@ class AddFksUsuariosAreas extends Migration
      */
     public function down()
     {
-       /* Schema::table('areas', function (Blueprint $table) {
+       Schema::table('areas', function (Blueprint $table) {
             //
             $table->dropForeign('areas_gerente_id_foreign');
         });
@@ -44,6 +44,6 @@ class AddFksUsuariosAreas extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->dropForeign('users_area_id_foreign');
-        });*/
+        });
     }
 }

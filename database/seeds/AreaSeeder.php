@@ -12,8 +12,13 @@ class AreaSeeder extends Seeder
     public function run()
     {
         App\Area::create([
-            'nome' => 'Area 51',
+            'nome' => 'AREA-51',
             //'gerente_id' => 1
        ]);
+
+       App\Area::create([
+        'nome' => 'IFPR-BANCA',
+        //'gerente_id' => 2
+   ]);
     }
 }
