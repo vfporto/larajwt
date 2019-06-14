@@ -43,6 +43,7 @@ class TipoUsuarioController extends Controller
         }
 
         $tipo->fill($request->all());
+        $retorno->save();
         return response()->json($tipo);
     }
 

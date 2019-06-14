@@ -34,6 +34,7 @@ class TipoJustificativaController extends Controller
         if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
 
         $retorno->fill($request->all());
+        $retorno->save();
         return response()->json($retorno);
     }
 
