@@ -29,7 +29,7 @@ class TipoOcorrenciaController extends Controller
     }
 
     public function update(Request $request, $id){
-        $retorno = Feriado::find($id);
+        $retorno = TipoOcorrencia::find($id);
 
         if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
 

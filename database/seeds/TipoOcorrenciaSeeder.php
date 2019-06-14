@@ -13,15 +13,15 @@ class TipoOcorrenciaSeeder extends Seeder
     {
         App\TipoOcorrencia::create([
             'nome' => 'Falta período integral',
-            'codigo' => 'FAI'
+            'codigo' => 'FPI'
         ]);
         App\TipoOcorrencia::create([
             'nome' => 'Falta período matutino',
-            'codigo' => 'FAM'
+            'codigo' => 'FPM'
         ]);
         App\TipoOcorrencia::create([
             'nome' => 'Falta período vespertino',
-            'codigo' => 'FAV'
+            'codigo' => 'FPV'
         ]);
         App\TipoOcorrencia::create([
             'nome' => 'Atraso entrada período matutino',
@@ -46,6 +46,10 @@ class TipoOcorrenciaSeeder extends Seeder
         App\TipoOcorrencia::create([
             'nome' => 'Núm ímpar marcações período vespertino',
             'codigo' => 'NIV'
+        ]);
+        App\TipoOcorrencia::create([
+            'nome' => 'Número de marcações insuficientes',
+            'codigo' => 'NMI'
         ]);
     }
 }
