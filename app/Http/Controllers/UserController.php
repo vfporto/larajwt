@@ -6,6 +6,8 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
 use App\User;
+use Illuminate\Support\Facades\Hash;
+
 //use App\Http\Controllers\Controller;
 
 
@@ -37,6 +39,7 @@ class UserController extends Controller
     public function store(Request $request){
         $user = new User();
         $user->fill($request->all());
+        $user->password = bcrypt($request->password);// Hash::make($request->password);
 
         if (!$request->filled('tipo_usuario_id'))
             $user->fill(['tipo_usuario_id' => $request->input('tipoUsuario.id')]);
@@ -65,6 +68,7 @@ class UserController extends Controller
         if(!$user) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
 
         $user->fill($request->all());
+        $user->password = bcrypt($request->password);// Hash::make($request->password);
 
         if (!$request->filled('tipo_usuario_id'))
             $user->fill(['tipo_usuario_id' => $request->input('tipoUsuario.id')]);
