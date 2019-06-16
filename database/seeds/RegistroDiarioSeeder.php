@@ -18,15 +18,15 @@ class RegistroDiarioSeeder extends Seeder
     {
         //$inicio = CarbonImmutable::now()->firstOfYear(); //inicio: começo deste ano
         $inicio = CarbonImmutable::now()->firstOfMonth(); //inicio: começo deste mês
-        $fim = CarbonImmutable::createMidnightDate();   // fim: hoje...
+        $fim = CarbonImmutable::createMidnightDate()->subDay();   // fim: ontem...
         $periodo = CarbonPeriod::create($inicio, $fim);
 
         //$userId = 1;
         $users = User::all();
         foreach ($users as $user) {
             foreach ($periodo as $key => $data) {
-                $num = rand(0, 14); // aprox. 7% de chances
-                if ($num > 0) {
+                $num = rand(0, 100);
+                if ($num > 15) { // aprox. 15% de chances
                     if ($data->isWeekday()) {
                         if (!Feriado::where('data', $data)->first()) {
                             App\RegistroDiario::create([

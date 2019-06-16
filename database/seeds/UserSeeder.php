@@ -43,7 +43,7 @@ class UserSeeder extends Seeder {
             'matricula' => 10000,
             'nome' => 'Vanderley Fabricio Porto',
             'email' => 'vfporto@vfporto',
-            'cartao' => '10000',
+            'cartao' => '1C88B7C3',
             'area_id' => 1,
             'tipo_usuario_id' => 1,
         ]);

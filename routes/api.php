@@ -36,7 +36,7 @@ Route::get('/time', function() {return response()->json(Carbon::now()->subHours(
 
 //Rota para marcação do ponto com JSON
 //dados JSON: {cartao: numCartao, unixTime: valorUnixTime}
-Route::post('registrarPonto', 'RegistroController@registrarPontoByRequest');
+Route::post(' ', 'RegistroController@registrarPontoByRequest');
 
 //Rota criada a pedidos... exemplo: http://localhost:8000/api/registrarPonto/10000/1560208197
 Route::get('registrarPonto/{cartao}/{unixTime}', 'RegistroController@registrarPontoByCartaoHora');
@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 });
 //----------------------- FIM ROTAS PROTEGIDAS -----------------------------------
 Route::get('gerarOcorrencia/{id}','OcorrenciaController@gerarOcorrenciasPorIdUsuarioHoje');
+Route::get('gerarOcorrenciasGeral','OcorrenciaController@gerarOcorrenciasGeral');
 
 Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@frequenciaByIdAnoMes');
 
@@ -100,15 +101,17 @@ Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@freque
  Route::resource('tipoUsuarioz', 'TipoUsuarioController');
 */
  Route::apiResources([
-    'userz' => 'UserController',
     'areaz' => 'AreaController',
     'feriadoz' => 'FeriadoController',
     'jornadaz' => 'JornadaController',
-    'tiposOcorrenciaz' => 'TipoOcorrenciaController',
-    'tiposJustificativaz' => 'TipoJustificativaController',
-    'tipoUsuarioz' => 'TipoUsuarioController',
+    'justificativaz' => 'JustificativaController',
+    'ocorrenciaz' => 'OcorrenciaController',
     'registroz' => 'RegistroController',
     'registroDiarioz' => 'RegistroDiarioController',
+    'tipoOcorrenciaz' => 'TipoOcorrenciaController',
+    'tipoJustificativaz' => 'TipoJustificativaController',
+    'tipoUsuarioz' => 'TipoUsuarioController',
+    'userz' => 'UserController',
  ]);
 
 

@@ -6,21 +6,26 @@ use App\Ocorrencia;
 use App\Feriado;
 use App\RegistroDiario;
 use App\Registro;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\TipoOcorrencia;
+use App\Justificativa;
 
 class OcorrenciaController extends Controller
 {
     public function index() {
-        $lista = Ocorrencia::all();
-        return response()->json($lista);
+        $lista = Ocorrencia::with('tipoOcorrencia', 'justificativa', 'justificativa.tipoJustificativa')->get();
+        //return response()->json($lista);
+        return $lista->toJson(JSON_PRETTY_PRINT);
     }
 
     public function show($id) {
-        $retorno = Ocorrencia::find($id);
+        $retorno = Ocorrencia::find($id)->with('tipoOcorrencia', 'justificativa', 'justificativa.tipoJustificativa')->first();
         if (!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
-        return response()->json($retorno);
+        //return response()->json($retorno);
+        //dd($retorno);
+        return $retorno->toJson(JSON_PRETTY_PRINT);
     }
 
     public function store(Request $request) {
@@ -51,6 +56,15 @@ class OcorrenciaController extends Controller
 /******************************************************************************
  *              G E R A Ç Ã O    D E   O C O R R Ê N C I A S
  ******************************************************************************/
+    public function gerarOcorrenciasGeral(){
+        $lista = RegistroDiario::with(['registros', 'ocorrencias'])->get();
+
+        foreach($lista as $item){
+            $this->gerarOcorrenciasByRegistroDiario($item);
+        }
+        $ocorrencias = Ocorrencia::all();
+        return response()->json($ocorrencias);
+    }
 
     public function gerarOcorrenciasPorIdUsuarioHoje($userId){
         $dt = Carbon::now()->toDateString();
@@ -88,19 +102,26 @@ class OcorrenciaController extends Controller
 
         $ocorrencia = null;
         //dd($registroDiario->registros);
-        if(!(empty($registroDiario->registros))) {
-
+        if(empty($registroDiario->registros)) {
+            //dd($registroDiario);
             // Falta Integral
 
             $ocorrencia = new Ocorrencia();
-            $ocorrencia->tipo_ocorrencia_id = TipoOcorrencia::where('codigo', 'FAI')->first()->id;
+            $ocorrencia->tipo_ocorrencia_id = TipoOcorrencia::where('codigo', 'FPI')->first()->id;
             $ocorrencia->registro_diario_id = $registroDiario->id;
             $ocorrencia->save();
         } else {
+            //teste com menos de 4 marcações
+            if (count($registroDiario->registros)<4){
+            $ocorrencia = new Ocorrencia(); //olha a oportunidade pra fazer um contrutor com parametros
+            $ocorrencia->tipo_ocorrencia_id = TipoOcorrencia::where('codigo', 'NMI')->first()->id;
+            $ocorrencia->registro_diario_id = $registroDiario->id;
+            $ocorrencia->save();
+            }
 
 
         }
-        dd($registroDiario, $ocorrencia);
+        //dd($registroDiario, $ocorrencia);
 
 
 
@@ -117,6 +138,24 @@ class OcorrenciaController extends Controller
     public function verificaFaltaIntegral($registroDiarioId) {
         //estou fazendo tudo no método gerarOcorrencia
     }
+
+
+
+
+
+    /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+     *                              J U S T I F I C A T I V A S
+     *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  */
+
+     //TODO: Decidir se esses metodos ficam aqui ou em JustificativaController...
+/*
+    public function justificarOcorrencia(Request $request){
+
+        $just = new Justificativa();
+        $just->
+
+    }
+*/
 
 
 }

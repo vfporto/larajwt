@@ -11,13 +11,14 @@ use App\Http\Resources\UserResource;
 
 class RegistroDiarioController extends Controller {
     public function index() {
-        $lista = RegistroDiario::with(['registros', 'ocorrencias'])->get();
+        $lista = RegistroDiario::with(['user','registros', 'ocorrencias'])->get();
         //dd($lista);
         return response()->json($lista);
     }
 
     public function show($id) {
-        $retorno = RegistroDiario::find($id);
+        $retorno = RegistroDiario::find($id)->with(['registros', 'ocorrencias'])->first();
+        //dd($retorno);
         if (!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
         return response()->json($retorno);
     }
@@ -99,7 +100,7 @@ class RegistroDiarioController extends Controller {
         $lista = RegistroDiario::where('user_id', $userId)
             ->whereDate('data', '>=', $dataini)
             ->whereDate('data', '<=', $datafim)
-            ->with([ 'registros', 'ocorrencias' ]) //TODO: alterar pra enviar uma string unica com os registros
+            ->with([ 'registros', 'ocorrencias', 'ocorrencias.tipoOcorrencia' ]) //TODO: alterar pra enviar uma string unica com os registros
             ->get();
 
         return response()->json([

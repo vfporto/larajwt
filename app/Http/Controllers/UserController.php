@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index(){
         //$lista = User::with(['tipoUsuario', 'area'])->get();
         //return response()->json($lista);
-        return UserResource::collection(User::paginate());
+        return UserResource::collection(User::orderBy('nome')->paginate());
     }
 
 

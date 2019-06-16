@@ -40,6 +40,7 @@ class RegistroController extends Controller
         if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
 
         $retorno->fill($request->all());
+        $retorno->save();
         return response()->json($retorno);
     }
 
@@ -81,7 +82,7 @@ class RegistroController extends Controller
         //Começa criação do Registro
         //1o verifica se já há registro diário para vincular o registro
         $registroDiario = RegistroDiario::where('data', $data)
-            ->where('user_id', $user->id)->first();
+            ->where('user_id', $user->id)->with('registros')->first();
 
         //Se é o primeiro registro do dia, criar registro diário
         if(!$registroDiario){
@@ -90,11 +91,27 @@ class RegistroController extends Controller
             $registroDiario->user_id = $user->id;
             $registroDiario->save();
         }
-        //Caso dê algum BO, retorna erro...
-        if(!$registroDiario){ return response()->json(['erro' => 'Reg Diario não criado!'], 403); } //ou 403
+        /* //Caso dê algum BO, retorna erro...
+        if(!$registroDiario){ return response()->json(['erro' => 'Reg Diario não criado!'], 403); } */
+
+
+        //Verifica se usuario já efetuou registro em menos de 5 minutos (RN-05, RF-05)
+        if(!empty($registroDiario->registros)){
+            $horaCarbon = Carbon::parse($hora);//->subHours(3);
+            foreach($registroDiario->registros as $reg){
+                $temp = Carbon::parse($reg->horario);
+                $diff = $horaCarbon->diffInMinutes($temp);
+                //dd($dataHora, $horaCarbon, $diff);
+                if($diff <= 5) {
+                    return response()->json(['erro' => 'Registro enviado, porem descartado!'], 200);
+                }
+
+            }
+        }
+
 
         //Com o Registro Diário OK, criar objeto Registro e persistir;
-        $registro = new Registro();
+        $registro = new Registro(); // criar construtor com parametros, blabalbla...
         $registro->horario = $hora;
         $registro->registro_diario_id = $registroDiario->id;
         $registro->save();

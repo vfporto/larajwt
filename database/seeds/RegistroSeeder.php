@@ -41,8 +41,8 @@ class RegistroSeeder extends Seeder
                 //dd($rd);
                 foreach ($user->jornadas as $jornada) {
                     //dd($user->jornadas);
-                    $num = rand(0, 15); //chance de 1 em 15 de não marcar...
-                    if($num > 0) {
+                    $num = rand(0, 100);
+                    if($num > 15) { //chance de  15% de não marcar...
                         $hora = Carbon::create($jornada->entrada)
                             ->subMinutes(rand(0, 20))
                             ->addMinutes(rand(0, 30))
@@ -51,8 +51,8 @@ class RegistroSeeder extends Seeder
                         $this->createRegistro($rd->id, $hora);
                     }
 
-                    $num = rand(0, 15); //chance de 1 em 15 de não marcar...
-                    if($num > 0) {
+                    $num = rand(0, 100);
+                    if($num > 15) {//chance de  15% de não marcar...
                         $hora = Carbon::create($jornada->saida)
                             ->subMinutes(rand(0, 20))
                             ->addMinutes(rand(0, 30))

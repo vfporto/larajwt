@@ -20,4 +20,8 @@ class Ocorrencia extends Model
         return $this->belongsTo('App\RegistroDiario','registro_diario_id');
     }
 
+    public function justificativa() {
+        return $this->hasOne('App\Justificativa');
+    }
+
 }

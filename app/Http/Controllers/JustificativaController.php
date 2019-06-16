@@ -4,82 +4,59 @@ namespace App\Http\Controllers;
 
 use App\Justificativa;
 use Illuminate\Http\Request;
+use App\Ocorrencia;
 
 class JustificativaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $lista = Justificativa::all();
+
+        return response()->json($lista);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function show($id){
+        $retorno = Justificativa::find($id);
+
+        if(!$retorno) {return response()->json(['erro' => 'Registro não encontrado'], 404);}
+        return response()->json($retorno);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $ocorrencia = Ocorrencia::with('justificativa', 'registroDiario', 'registroDiario.registros')->find($request->ocorrencia_id);
+        dd($ocorrencia);
+        if($ocorrencia && !empty($ocorrencia->justificativa)){
+            $just = new Justificativa();
+            //$just->fill($request->all());
+            $just->observacao = $request->observacao;
+            $just->tipo_justificativa_id = $request->tipo_justificativa_id;
+            $just->ocorrencia_id = $ocorrencia->ocorrencia_id;
+            $just->save();
+            dd($just);
+            return $just->toJson(JSON_PRETTY_PRINT);
+        }
+        return response()->json(['erro' => 'Ocorrencia não encontrada'], 404);
+        //$just->save();
+
+        //return response()->json($just);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Justificativa  $justificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Justificativa $justificativa)
-    {
-        //
+    public function update(Request $request, $id){
+        $retorno = Justificativa::find($id);
+
+        if(!$retorno) { return response()->json(['erro' => 'Registro não encontrado'], 404); }
+
+        $retorno->fill($request->all());
+        $retorno->save();
+        return response()->json($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Justificativa  $justificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Justificativa $justificativa)
-    {
-        //
+    public function destroy($id){
+        $justificativa = Justificativa::find($id);
+        if(!$justificativa){ return response()->json(['erro' => 'Registro não encontrado'], 404); }
+        $justificativa->delete();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Justificativa  $justificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Justificativa $justificativa)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Justificativa  $justificativa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Justificativa $justificativa)
-    {
-        //
-    }
+
+
 }
