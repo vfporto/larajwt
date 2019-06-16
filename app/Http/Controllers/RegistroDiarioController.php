@@ -100,8 +100,10 @@ class RegistroDiarioController extends Controller {
         $lista = RegistroDiario::where('user_id', $userId)
             ->whereDate('data', '>=', $dataini)
             ->whereDate('data', '<=', $datafim)
-            ->with([ 'registros', 'ocorrencias', 'ocorrencias.tipoOcorrencia' ]) //TODO: alterar pra enviar uma string unica com os registros
-            ->get();
+            ->with([
+                'registros', 'ocorrencias', 'ocorrencias.tipoOcorrencia', 'ocorrencias.justificativa',
+                'ocorrencias.justificativa.tipoJustificativa',
+            ])->get();
 
         return response()->json([
             'user' =>  new UserResource(User::find($userId)),

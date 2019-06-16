@@ -87,7 +87,7 @@ Route::get('gerarOcorrencia/{id}','OcorrenciaController@gerarOcorrenciasPorIdUsu
 Route::get('gerarOcorrenciasGeral','OcorrenciaController@gerarOcorrenciasGeral');
 
 Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@frequenciaByIdAnoMes');
-
+Route::post('justificarOcorrencia', 'JustificativaController@justificarOcorrencia');
 
 
 
