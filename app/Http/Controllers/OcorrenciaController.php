@@ -8,6 +8,7 @@ use App\RegistroDiario;
 use App\Registro;
 use App\User;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use App\TipoOcorrencia;
 use App\Justificativa;
@@ -57,14 +58,27 @@ class OcorrenciaController extends Controller
  *              G E R A Ç Ã O    D E   O C O R R Ê N C I A S
  ******************************************************************************/
     public function gerarOcorrenciasGeral(){
-        $lista = RegistroDiario::with(['registros', 'ocorrencias'])->get();
+        //limpar todas as ocorrencias existentes
+        Ocorrencia::whereNotNull('id')->delete();
 
-        foreach($lista as $item){
-            $this->gerarOcorrenciasByRegistroDiario($item);
+        //Cria ocorrencias para o mes corrente...
+        $usuarios = User::all();
+        $dtIni = Carbon::now()->startOfMonth();
+        $dtFim = Carbon::now();
+        $periodo = CarbonPeriod::create($dtIni, $dtFim);
+
+        foreach($usuarios as $user){
+            foreach ($periodo as $key => $data) {
+            $this->gerarOcorrenciasPorDataPorUsuario($user->id, $data->toDateString());
+            }
         }
         $ocorrencias = Ocorrencia::all();
-        return response()->json($ocorrencias);
+        return $ocorrencias->toJson(JSON_PRETTY_PRINT);
+
+
     }
+
+
 
     public function gerarOcorrenciasPorIdUsuarioHoje($userId){
         $dt = Carbon::now()->toDateString();
@@ -102,7 +116,7 @@ class OcorrenciaController extends Controller
 
         $ocorrencia = null;
         //dd($registroDiario->registros);
-        if(empty($registroDiario->registros)) {
+        if(!$registroDiario->registros || count($registroDiario->registros)==0) {// empty($registroDiario->registros)) {
             //dd($registroDiario);
             // Falta Integral
 
