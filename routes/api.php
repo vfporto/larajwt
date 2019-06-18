@@ -78,7 +78,8 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     //frequenciaByIdPeriodo
     //frequenciaByIdAnoMes
 
-
+    Route::get('justificativas/pendentes','JustificativaController@justificativasPendentes');
+    Route::get('justificativas/parecer/{id}/{status}','JustificativaController@setParecer');
 
 
 });

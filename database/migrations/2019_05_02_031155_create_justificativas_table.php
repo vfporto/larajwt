@@ -26,6 +26,9 @@ class CreateJustificativasTable extends Migration
             //Solução de curto prazo para aprovação de pendências
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+
+            $table->unsignedBigInteger('area_id');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
             //----------------------------------------------------
 
             $table->enum('status',['PENDENTE', 'APROVADA', 'REPROVADA']);

@@ -16,11 +16,11 @@ class TipoJustificativaSeeder extends Seeder
             'codigo' => 'ATM'
         ]);
         App\TipoJustificativa::create([
-            'nome' => 'Compensação Serviço Eleitoral',
+            'nome' => 'Serviço Eleitoral',
             'codigo' => 'CSE'
         ]);
         App\TipoJustificativa::create([
-            'nome' => 'Compensação Doação de Sangue',
+            'nome' => 'Doação de Sangue',
             'codigo' => 'CDS'
         ]);
         App\TipoJustificativa::create([

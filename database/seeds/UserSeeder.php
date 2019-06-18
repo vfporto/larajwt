@@ -78,7 +78,7 @@ class UserSeeder extends Seeder {
             'password' => bcrypt('123456'),
 
             'matricula' => 10005,
-            'nome' => 'Conta Teste Funcionário',
+            'nome' => 'Funcionário José Silva',
             'email' => 'funcionario',
             'cartao' => '10005',
             'area_id' => 2,
@@ -90,7 +90,7 @@ class UserSeeder extends Seeder {
             'password' => bcrypt('123456'),
 
             'matricula' => 10006,
-            'nome' => 'Conta Teste Gerente',
+            'nome' => 'Gerente Pedro de Lima',
             'email' => 'gerente',
             'cartao' => '10006',
             'area_id' => 2,
@@ -102,7 +102,7 @@ class UserSeeder extends Seeder {
             'password' => bcrypt('123456'),
 
             'matricula' => 10007,
-            'nome' => 'Conta Teste Gestor',
+            'nome' => 'Gestor João de Souza',
             'email' => 'gestor',
             'cartao' => '10007',
             'area_id' => 2,

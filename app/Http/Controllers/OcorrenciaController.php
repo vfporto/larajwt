@@ -64,7 +64,7 @@ class OcorrenciaController extends Controller
         //Cria ocorrencias para o mes corrente...
         $usuarios = User::all();
         $dtIni = Carbon::now()->startOfMonth();
-        $dtFim = Carbon::now();
+        $dtFim = Carbon::now()->subDay();
         $periodo = CarbonPeriod::create($dtIni, $dtFim);
 
         foreach($usuarios as $user){
@@ -73,7 +73,8 @@ class OcorrenciaController extends Controller
             }
         }
         $ocorrencias = Ocorrencia::all();
-        return $ocorrencias->toJson(JSON_PRETTY_PRINT);
+        //return $ocorrencias->toJson(JSON_PRETTY_PRINT);
+        return response()->json(['message' => 'Ocorrencias Geradas'],200);
 
 
     }
