@@ -61,6 +61,8 @@ protected $hidden = ['password', 'created_at', 'updated_at', 'deleted_at', /*'ar
                 //'senha' => $this->senha,
                 'area' => Area::find($this->area_id),
                 'tipoUsuario' => TipoUsuario::find($this->tipo_usuario_id),
+                'area_id' => $this->area_id,
+                'tipo_usuario_id' => $this->tipo_usuario_id,
             ]
         ];
     }

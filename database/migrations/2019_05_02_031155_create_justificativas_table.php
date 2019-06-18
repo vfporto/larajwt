@@ -15,7 +15,7 @@ class CreateJustificativasTable extends Migration
     {
         Schema::create('justificativas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('observacao', 200);
+            $table->string('observacao', 500)->nullable();
 
             $table->unsignedBigInteger('ocorrencia_id');
             $table->foreign('ocorrencia_id')->references('id')->on('ocorrencias')->onDelete('restrict');
@@ -23,7 +23,12 @@ class CreateJustificativasTable extends Migration
             $table->unsignedBigInteger('tipo_justificativa_id');
             $table->foreign('tipo_justificativa_id')->references('id')->on('tipo_justificativas')->onDelete('restrict');
 
-            $table->enum('status',['PENDENTE', 'APROVADO', 'REPROVADO']);
+            //Solução de curto prazo para aprovação de pendências
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            //----------------------------------------------------
+
+            $table->enum('status',['PENDENTE', 'APROVADA', 'REPROVADA']);
 
             $table->timestamps();
 
