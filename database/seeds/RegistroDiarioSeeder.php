@@ -18,7 +18,7 @@ class RegistroDiarioSeeder extends Seeder
     {
         //$inicio = CarbonImmutable::now()->firstOfYear(); //inicio: começo deste ano
         $inicio = CarbonImmutable::now()->firstOfMonth(); //inicio: começo deste mês
-        $fim = CarbonImmutable::createMidnightDate()->subDay();   // fim: ontem...
+        $fim = CarbonImmutable::now()->subDays(1);   // fim: ontem...
         $periodo = CarbonPeriod::create($inicio, $fim);
 
         //$userId = 1;

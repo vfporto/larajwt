@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Area;
+use App\User;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
@@ -35,6 +36,8 @@ class AreaController extends Controller
 
         $retorno->fill($request->all());
         $retorno->save();
+
+
 
         return response()->json($retorno);
     }

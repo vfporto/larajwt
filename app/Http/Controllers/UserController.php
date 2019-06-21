@@ -91,6 +91,13 @@ class UserController extends Controller
 
         $user->delete();
     }
+
+    public function findByAreaId($id){
+        $lista = User::with('area')->where('area_id',$id)->get();
+        return response()->json($lista);
+    }
+
+
 /*
     private function validate($id, $dados){
 

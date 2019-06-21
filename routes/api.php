@@ -36,7 +36,7 @@ Route::get('/time', function() {return response()->json(Carbon::now()->subHours(
 
 //Rota para marcação do ponto com JSON
 //dados JSON: {cartao: numCartao, unixTime: valorUnixTime}
-Route::post(' ', 'RegistroController@registrarPontoByRequest');
+Route::post('registrarPonto', 'RegistroController@registrarPontoByRequest');
 
 //Rota criada a pedidos... exemplo: http://localhost:8000/api/registrarPonto/10000/1560208197
 Route::get('registrarPonto/{cartao}/{unixTime}', 'RegistroController@registrarPontoByCartaoHora');
@@ -90,7 +90,7 @@ Route::get('gerarOcorrenciasGeral','OcorrenciaController@gerarOcorrenciasGeral')
 Route::get('frequenciaMensal/{id}/{ano}/{mes}', 'RegistroDiarioController@frequenciaByIdAnoMes');
 Route::post('justificarOcorrencia', 'JustificativaController@justificarOcorrencia');
 
-
+Route::get('userz/area/{id}','UserController@findByAreaId');
 
  //HACKZ
  /*Route::resource('usuarioz', 'UserController');
