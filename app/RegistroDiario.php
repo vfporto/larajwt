@@ -20,7 +20,7 @@ class RegistroDiario extends Model
     }
 
     function registros() {
-        return $this->hasMany('App\Registro');
+        return $this->hasMany('App\Registro')->orderBy('horario');
     }
 
     function ocorrencias() {

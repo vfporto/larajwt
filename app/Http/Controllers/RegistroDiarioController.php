@@ -100,6 +100,7 @@ class RegistroDiarioController extends Controller {
         $lista = RegistroDiario::where('user_id', $userId)
             ->whereDate('data', '>=', $dataini)
             ->whereDate('data', '<=', $datafim)
+            ->orderBy('data', 'asc')
             ->with([
                 'registros', 'ocorrencias', 'ocorrencias.tipoOcorrencia', 'ocorrencias.justificativa',
                 'ocorrencias.justificativa.tipoJustificativa',
